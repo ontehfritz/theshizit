@@ -1,0 +1,65 @@
+<div id="content_item" style="border: 1px solid black; padding: 10px;" class="shadow box_round">
+<div style="float:left;width:80%;">
+    <% if current_user != nil && current_user.id == content.user_id %>
+		<div class="content_title" style="background-color: #CCFFCC;">
+		    <% if content.class.name == "Question" %>
+				<%= link_to "A Shiz peer asked ... ", it_category_content_url(content.category.it, content.category, content)%>
+			<% else %>
+				<%= link_to content.title, it_category_content_url(content.category.it, content.category, content)  %>
+			<% end %>
+			<a href="#" style="float:right;" class="toggle">+</a></span>
+		</div>
+	<% else %>
+		<div class="content_title">
+			<% if content.class.name == "Question" %>
+				<%= link_to "A Shiz peer asked ... ", it_category_content_url(content.category.it, content.category, content)  %>
+			<% else %>
+				<%= link_to content.title, it_category_content_url(content.category.it, content.category, content)  %>
+			<% end %>
+			<a href="#" style="float:right;" class="toggle">+</a></span>
+		</div>
+	<% end %>
+	<div style="display:none;">
+	<% if content.class.name == "Pic" %>
+	<div>
+		<%= image_tag("/it/#{content.category.it_id}/categories/#{content.category.id}/contents/#{content.id}/pic", :alt => "Pic", :border => 1, :size => "80x80") %>
+	</div>
+	<% end %>
+	<div class="content_shiz">
+		
+			<% case content.class.name %>
+			<% when "Pic" %>
+				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
+			<% when "Rant" %>
+				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
+			<% when "Blog" %>
+				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
+			<% when "Question" %>
+				<%= content.theshiz %>
+			<% when "Link" %>
+				<a href="<%= content.theshiz %>" target="_blank" class="smalllink"><%= content.theshiz %></a>
+			<% when "Code" %>
+				
+			<% end %>
+		
+	</div>
+	</div>
+</div>
+<div style="float:left;text-align:center;">
+<span style="font-size:30px;color:#E8E8E8;">
+<% case content.class.name %>
+<% when "Pic" %>
+:)~
+<% when "Rant" %>
+>:-C
+<% when "Blog" %>
+:&
+<% when "Question" %>
+?
+<% when "Code" %>
+01
+<% end %>
+</span>
+</div>
+<div id="content_goodies" style="clear:both;font-size:10px;">Comments(<%= content.comments.count.to_s %>)</div>
+</div>

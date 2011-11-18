@@ -1,0 +1,74 @@
+<script type = "text/javascript">
+$(document).ready(function () {
+    $("#content_type").change(function () {
+        switch($("#content_type").val())
+		{
+			case 'Pic':
+				$("#content_pic").show();
+				$("#content_shiz label").text("Description");
+				$("#content_title label").text("Title");
+				$("#content_shiz textarea").attr("rows", "5");
+				$("#content_shiz").show();
+				$("#content_title").show();
+				$("#post").show();
+				break;
+			case 'Link':
+				$("#content_pic").hide();
+				$("#content_shiz label").text("Link");
+				$("#content_shiz textarea").attr("rows", "5");
+				$("#content_shiz").show();
+				$("#content_title").show();
+				$("#post").show();
+				break;
+			case 'Rant':
+				$("#content_pic").hide();
+				$("#content_title label").text("Subject");
+				$("#content_shiz label").text("Rant away!");
+				$("#content_shiz textarea").attr("rows", "20");
+				$("#content_shiz textarea").attr("cols", "50");
+				$("#content_shiz").show();
+				$("#content_title").show();
+				$("#post").show();
+				break;
+			case 'Blog':
+				$("#content_pic").hide();
+				$("#content_shiz label").text("Blog it");
+				$("#content_shiz textarea").attr("rows", "20");
+				$("#content_shiz textarea").attr("cols", "50");
+				$("#content_shiz").show();
+				$("#content_title").show();
+				$("#post").show();
+				break;
+			case 'Question':
+				$("#content_title").hide();
+				$("#content_shiz label").text("Ask it");
+				$("#content_pic").hide();
+				$("#content_shiz").show();
+				$("#content_shiz textarea").attr("rows", "5");
+				$("#post").show();
+				break;
+			case 'Code':
+				$("#content_pic").hide();
+				$("#content_shiz label").text("Link (Only accepts from Gist and Pastie)");
+				$("#content_title label").text("Title");
+				$("#content_shiz textarea").attr("rows", "5");
+				$("#content_shiz").show();
+				$("#content_title").show();
+				$("#post").show();
+				break;
+			default:
+				$("#content_shiz").hide();
+				$("#content_title").hide();
+				$("#content_pic").hide();
+				$("#post").hide();
+				break;
+		}
+    });
+	
+	$("#content_type").change();
+});
+
+</script>
+<%= render 'form' %>
+
+

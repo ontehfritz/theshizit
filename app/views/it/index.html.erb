@@ -1,0 +1,14 @@
+<% @its.each do |it| %>
+<div>
+	<div>
+	
+	<% if it.is_current%>
+		<span style="color: green"><%= link_to it.name,  it %><--- Current Shiz</span>
+	<% else %>
+		<span><%= link_to it.name,  it %></span>
+	<% end %>
+	</div>
+	<div><%= it.created_at %></div>
+<div>
+
+<% end %>

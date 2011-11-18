@@ -1,0 +1,19 @@
+<%= form_for([@category.it, @category]) do |f| %>
+  <% if @category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@category.errors.count, "error") %> sh!z blocked, Fix the following YO!:</h2>
+      <ul>
+      <% @category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.text_field :theshiz %>
+  <br />
+  <%= f.label :is_nsfw %>
+  <%= f.check_box :is_nsfw %> <br />
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>:-C~ theSh!z!t</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <script type="text/javascript">
+		function showRules(){
+		    $("#rules").dialog({ title: 'Rules' });
+			$("#rules").dialog("open");
+			return false;
+		}
+		function showWhat(){
+			$("#what").dialog({ title: 'Here it is ...' });
+			$("#what").dialog("open");
+			return false;
+		}
+		function showHelp(){
+			$("#help").dialog({ title: 'FAQ' });
+			$("#help").dialog("open");
+			return false;
+		}
+		function showAbout(){
+			$("#about").dialog({ title: 'About' });
+			$("#about").dialog("open");
+			return false;
+		}
+		
+		$(document).ready(function() {
+			$("#about").dialog({
+				   autoOpen: false,
+				   modal: true,
+				   height: 300,
+				   width: 600,
+			});
+			$("#rules").dialog({
+				   autoOpen: false,
+				   modal: true,
+				   height: 500,
+				   width: 800,
+			});
+			$("#what").dialog({
+				   autoOpen: false,
+				   modal: true,
+				   height: 500,
+				   width: 800,
+			});
+			$("#help").dialog({
+				   autoOpen: false,
+				   modal: true,
+				   height: 500,
+				   width: 800,
+			});
+			//$('form').submit(function(){
+			//	$('input[type=submit]', this).attr('disabled', 'disabled');
+			//});
+		});
+</script>
+<!--[if IE]> 
+<style type="text/css">
+a  {
+ color: black;
+}
+body{
+ color: black;
+}
+</style>
+<![endif]-->
+</head>
+<body>
+<div> <a href="/" style="font-size: 30px;">:-C~ theSh!z!t</a><%= yield :shiz_cat %><%= yield :shiz %>
+<% if current_user != nil %><span style="float:right"><%= link_to('X', destroy_user_session_path, :method => :delete) %></span><% else %><span style="float:right"><%= link_to('Go in!', new_user_session_path) %></span><%end %></div>
+<hr style="border: 1px dashed #000;" />
+<% if !notice.nil? || !alert.nil? %>
+<script>
+$(function() {
+   $('#alerts').delay(10).fadeIn('normal', function() {
+      $(this).delay(2500).fadeOut();
+   });
+});
+</script>
+<% end %>
+<div id="alerts" style="display:none;">
+<p class="notice" style="background-color: #FFFF99;" id="flash"><%= notice %></p>
+<p class="alert" style="display:none;background-color: red"><%= alert %></p>
+</div>
+<%= yield %>
+
+<hr style="border: 1px dashed #000;" />
+<div id="footer" style="width:%100;text-align: center;background-color: #F0F0F0;">
+<a href="" onclick="return showWhat();" class="smalllink">What is this?</a> | <a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
+|  <%= link_to('You', edit_user_registration_path, :class => "smalllink") %>
+</div>
+<div id="rules" style="display: none;">
+<ol>
+	<li>
+	Do not post any material that involves a minor doing illegal (under 18) activites.
+	This will not be tolerated, resulting in a ban from the website!
+	</li>
+	<li>
+	Do not post any material that voilates local or webserver location laws. Breaking the law is strictly prohibited
+	</li>
+	<li>
+	No spamming, automated bots, flooding, or scraping is allowed
+	</li>
+	<li>
+	Please mark categories as Not suitable for work(NSFW) that will contain explicit material.
+	</li>
+	<li>
+	If categories that are not marked with NSFW contain any material that is NSFW the content will be deleted!
+	</li>
+	<li>
+	Please have respect for the board, quality posts make a quality board. People who lack respect may result in a ban. 
+	</li>
+</ol>
+</div>
+
+<div id="help" style="display: none;">
+<ul>
+	<li>
+	<u>What is a shiz period?</u>
+	<br />
+	<span style="color:green;">A shiz period begins at the beginning of each month and ends the last day of the month.<br />
+	This means all previous periods are archived and you can no longer post or interact 
+	with periods that have past, However you will still be able to read shiz from past periods. Please check the archive section. 
+	</li>
+	<li>
+		<span style="color:green;">On each new period the slate is cleaned and ready for action, this gives a chance for new evolving content each period.</span>  
+	</li>
+	<li>
+	<b>What do green categories, content, and comments mean?</b><br />
+	<span style="color:green;">Shiz highlighted with green was created by you!!</span>
+	</li>
+	<li>
+	<b>Why are there no names or dates on anything?</b><br />
+	<span style="color:green;">This is an anonymous web board. No identity informaton will be shared.</span>
+	</li>
+	<li>
+	<b>What can we not post?<b/>
+	<span style="color:green;">Please read the rules and please respect them</span>
+	</li>
+	<li>
+	<b>Why are some categories larger than others?</b>
+	<span style="color:green;">As content grows inside a category so does its popularity as well as the font size. This is to emphasize which categories are the top shiz!</span>
+	</li>
+</ul>
+</div>
+<div id="what" style="display: none;">
+<ul>
+	<li>
+	<b>What is this?</b>
+	<br />
+	This is another BBS sytle web board! It is pseudo-anonymous (hard to be truly anonymous), yes you have to register, but you only need to enter the username you want and password. None of your information
+	will be posted on the web board, there is no usernames or other information rendered on categories, content, or comments. 
+	</li>
+	<li>
+	<b>If anoymous, why have a registration?</b><br />
+	This is to make your experience better, it avoids having to enter tap codes, captcha(for now), etc. Also if you are a high quality contributor, we would like to make your experience even better. 
+	</li>
+</ul>
+</div>
+<div id="about" style="display: none;">
+	<p>TheShizit Board v0.1 Created By: --|Fritz|-- </p>
+	<p>I will be releasing source code when hits full version 1.0, 
+	If you would like to contribute please message me on github: 
+	<a href="https://github.com/ontehfritz">Git Hub</a></p>
+</div>
+</body>
+</html>

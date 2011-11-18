@@ -1,0 +1,67 @@
+<script>
+function showAddDialog(){
+	$("#divId").dialog({ title: 'Add Some Shiz' });
+   	$("#divId").dialog("open");
+   	$("#modalIframeId").attr("src","<%= new_it_category_content_url(@it, @category) %>");
+   	return false;
+}
+
+function divShow(content_item)
+{
+	$("div.content_item").mouseover(function() {
+			$("div.content_shiz").toggle();
+		}).mouseout(function(){
+			$("div.content_shiz").toggle();
+	});
+}
+
+$(document).ready(function() {
+		$("#divId").dialog({
+			autoOpen : false,
+			modal : true,
+			height : 600,
+			width : 500,
+			close : function(event, ui) {
+				location.reload(true);
+			}
+		});
+		
+		 $('a.toggle').toggle(
+			function () {
+               $(this).text("-");
+               $(this).parent('div').next('div').toggle();
+            },
+            function () {
+                $(this).text("+");
+                $(this).parent('div').next('div').toggle();
+            }
+		 );
+
+		
+});
+
+</script>
+<% content_for :shiz_cat do %>
+   :<%= @category.theshiz %>
+<% end %>
+<h3><%= @category.theshiz %></h3>
+<div id="content" style="float:left;border: 0px dotted black;width:80%;">
+<% if @category.it.is_current %>
+<input type="button" id="add" value="Add" onclick="return showAddDialog()">
+<% end %>
+<% if @sort == "recent" %>
+<span style="float:right;">View By: <%= link_to "Popularity", it_category_url(@it, @category) +  "?sort=pop" %></span>
+<% else %>
+<span style="float:right;">View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" %></span>
+<% end %>
+<% @contents.each do |content|  %>
+	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content} %> 
+<% end %>
+</div>
+<div style="clear:both;"></div>
+<div id="divId" title="Modal Window">
+    <iframe id="modalIframeId" width="100%" height="100%"
+    marginWidth="0" marginHeight="0" frameBorder="0" scrolling="no"
+    title="Dialog Title">Your browser does not support javascript</iframe>
+</div>
+<%= will_paginate @contents %>

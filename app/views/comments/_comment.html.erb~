@@ -1,0 +1,14 @@
+<div id="comment_item">
+<div id="comment_user"></div>
+<div id="comment_shiz">
+<% if can? :delete, comment %><%= link_to "X", it_category_content_comment_path(comment.content.category.it, 
+														comment.content.category, comment.content, comment), :confirm => 'Are you sure?', :method => :delete %><% end %>
+<% if current_user != nil && current_user.id == comment.user_id %>
+<p class="comments" style="background-color: #CCFFCC;">"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"</p>
+<% else %>
+<p class="comments">"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"</p>
+<% end %>
+</div>
+<div id="comment_goodies">
+</div>
+</div>

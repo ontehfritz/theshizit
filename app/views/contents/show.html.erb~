@@ -1,0 +1,60 @@
+<script>
+function showAddDialog(){
+	$("#divId").dialog({ title: 'Add Some Shiz' });
+   	$("#divId").dialog("open");
+   	$("#modalIframeId").attr("src","<%= new_it_category_content_comment_url(@content.category.it,@content.category, @content) %>");
+   	return false;
+}
+
+$(document).ready(function() {
+		$("#divId").dialog({
+			autoOpen : false,
+			modal : true,
+			height : 600,
+			width : 500,
+			close : function(event, ui) {
+				location.reload(true);
+			}
+		});
+});
+</script>
+<% content_for :shiz_cat do %>
+   :<%= link_to @content.category.theshiz, it_category_url(@content.category.it, @content.category)  %>
+<% end %>
+<% content_for :shiz_cat do %>
+	:<%= @content.title %>
+<% end %>
+<div id="content_item">
+<% if can? :delete, @content %><%= link_to "X", [@content.category.it, @content.category, @content], :confirm => 'Are you sure?', :method => :delete %><% end %>
+<div id="content_title">
+<h3><%= @content.title %></h3>
+</div>
+<% if @content.class.name == "Pic" %>
+	<div><%= image_tag("/it/#{@content.category.it_id}/categories/#{@content.category.id}/contents/#{@content.id}/pic", :alt => "Pic", :border => 1) %></div>
+<% end %>
+<div id="content_shiz">
+<% if @content.class.name == "Code" %>
+<!-- support gist and pastie -->
+<script src="<%= @content.theshiz %>"></script>
+<% elsif @content.class.name == "Link" %>
+<a href="<%= @content.theshiz %>" target="_blank" class="smalllink"><%= @content.theshiz %></a>
+<% else %>
+<%= @content.theshiz.gsub("\n", "<br />").html_safe %>
+<% end %>
+</div>
+<br />
+<br />
+<div id="content_goodies">Comments(<%= @content.comments.count.to_s %>)</div>
+</div>
+<% if @content.category.it.is_current %>
+	<input type="button" id="add" value="Add" onclick="return showAddDialog()">
+<% end %>
+<% @content.comments.each do |comment|  %>
+	<%= render :partial => "comments/comment", :locals=>{:comment=> comment} %> 
+<% end %>
+
+<div id="divId" title="Modal Window">
+    <iframe id="modalIframeId" width="100%" height="100%"
+    marginWidth="0" marginHeight="0" frameBorder="0" scrolling="no"
+    title="Dialog Title">Your browser does not support javascript</iframe>
+</div>
