@@ -8,6 +8,6 @@ class CreateIts < ActiveRecord::Migration
       t.timestamps
     end
 	
-	It.create :name => "Shiz BANG!", :message => "1st Shiz period - Archive 30 days - new shiz begins decemeber 1", :is_current => true
+	It.create :name => "BETA test!", :message => "Beta Test - new shiz period begins Decemeber 1", :is_current => true
   end
 end
