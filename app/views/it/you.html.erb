@@ -17,7 +17,11 @@
 	<ul>
 	<% @contents.each do |content|%>
 <li>
+	<% if content.class.name == "Question"%>
+	<%= link_to truncate(content.theshiz, :length => 50, :ommission => "..."), it_category_content_url(content.category.it, content.category, content) %> - Comments(<%= content.comments.count %>)
+	<%else%>
 	<%= link_to content.title, it_category_content_url(content.category.it, content.category, content) %> - Comments(<%= content.comments.count %>)
+	<%end%>
 </li>
 <%end%>
 </div>
@@ -26,7 +30,11 @@
 	<ul>
 	<%  @commented_contents.sort_by{|c| c.comments.count}.reverse.each do |content|%>
 <li>
-	<%= link_to content.title, it_category_content_url(content.category.it, content.category, content)%>-comments(<%= content.comments.count %>)
+	<% if content.class.name == "Question"%>
+	<%= link_to truncate(content.theshiz, :length => 50, :ommission => "..."), it_category_content_url(content.category.it, content.category, content) %> - Comments(<%= content.comments.count %>)
+	<%else%>
+	<%= link_to content.title, it_category_content_url(content.category.it, content.category, content) %> - Comments(<%= content.comments.count %>)
+	<%end%>
 </li>
 <%end%>
 </ul>

@@ -1,4 +1,5 @@
 class ItController < ApplicationController
+  before_filter :authenticate_user!, :except => [:show, :index]
 	def index
 	    @its = It.find(:all, :order => "created_at DESC")
 	end

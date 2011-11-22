@@ -59,7 +59,7 @@ include ActionView::Helpers::SanitizeHelper
 		respond_to do |format|
 		  if @content.save
 			flash[:notice] = 'Content was successfully created.'
-			format.html { render action: "close" }
+			format.html { render action: "close", :layout => "dialog" }
 			format.json { render json: @content, status: :created, location: @content }
 		  else
 			format.html { render action: "new", :layout => "dialog" }

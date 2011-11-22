@@ -66,7 +66,7 @@ class CategoriesController < ApplicationController
 		respond_to do |format|
 		  if @category.save
 			flash[:notice] = 'Category was successfully created.'
-			format.html { render action: "close" }
+			format.html { render action: "close",:layout => "dialog" }
 			format.json { render json: @category, status: :created, location: @category }
 		  else
 			format.html { render action: "new", layout: "dialog" }

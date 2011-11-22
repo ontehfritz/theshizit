@@ -60,7 +60,7 @@ class CommentsController < ApplicationController
 		  if @comment.save
 			flash[:notice] = 'Comment was successfully created.'
 			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
-			format.html { render action: "close" }
+			format.html { render action: "close", :layout => "dialog"}
 			format.json { render json: @comment, status: :created, location: @comment }
 		  else
 			format.html { render action: "new" }
