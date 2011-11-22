@@ -1,5 +1,5 @@
 class Category < ActiveRecord::Base
-	default_scope :conditions => ["in_recycling = ?", false]
+	default_scope :conditions => ["categories.in_recycling = ?", false]
 	validates :theshiz, :presence => true, :length => { :maximum => 20 }, :uniqueness => { :scope => :it_id,
     :message => "This category has already been created" }
 	has_many :contents

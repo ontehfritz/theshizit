@@ -1,0 +1,30 @@
+<h3>Your sh!z score: <%= @shiz_score.to_s %></h3>
+<div>
+<span>Your Categories:</span>
+<ul>
+<% @categories.each do |category|%>
+<li>
+	<%= category.theshiz %> - Post (<%= category.contents.count.to_s %>)
+</li>
+<%end%>
+</ul>
+</div>
+<div>
+	<span>Posts you added:</span>
+	<ul>
+	<% @contents.each do |content|%>
+<li>
+	<%= content.title %> - Comments(<%= content.comments.count %>)
+</li>
+<%end%>
+</div>
+<div>
+	<span>Posts you commented on (Total comments: <%= @comments.count %>):</span>
+	<ul>
+	<%  @commented_contents.sort_by{|c| c.comments.count}.reverse.each do |content|%>
+<li>
+	<%= content.title %>-comments(<%= content.comments.count %>)
+</li>
+<%end%>
+</ul>
+</div>

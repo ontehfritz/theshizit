@@ -4,8 +4,8 @@ class CreateContents < ActiveRecord::Migration
 	  t.string :title
 	  t.text :theshiz
 	  t.string :image_type
-      t.string :file_name
-      t.binary :image_data
+    t.string :file_name
+    t.binary :image_data, :limit => 10.megabyte
 	  t.string :type
 	  t.integer :comments_count, :default => 0
 	  t.boolean :in_recycling, :default => false

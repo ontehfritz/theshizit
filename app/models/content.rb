@@ -1,5 +1,5 @@
 class Content < ActiveRecord::Base
-    default_scope :conditions => ["in_recycling = ?", false]
+  default_scope :conditions => ["contents.in_recycling = ?", false]
 	has_many :comments
 	belongs_to :category, :counter_cache => true
 	self.per_page = 10

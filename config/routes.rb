@@ -1,8 +1,9 @@
 Shizit::Application.routes.draw do
- 
+ match '/you/:id' => 'it#you'
  resources :it do
 	 member do
 		get 'list'
+		get 'you'
 	 end
 	resources :categories do
 		resources :contents do
