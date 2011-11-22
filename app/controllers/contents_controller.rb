@@ -17,6 +17,7 @@ include ActionView::Helpers::SanitizeHelper
   # GET /contents/1.json
   def show
     @content = Content.find(params[:id])
+    @it = @content.category.it
 	
     respond_to do |format|
       format.html # show.html.erb

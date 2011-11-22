@@ -1,10 +1,13 @@
+<% @it = @it%>
+<%= current_user.username %>: <%= link_to('Change Password', edit_user_registration_path, :class => "smalllink") %>
+<hr style="border: 1px dashed #000;" />
 <h3>Your sh!z score: <%= @shiz_score.to_s %></h3>
 <div>
 <span>Your Categories:</span>
 <ul>
 <% @categories.each do |category|%>
 <li>
-	<%= category.theshiz %> - Post (<%= category.contents.count.to_s %>)
+	<%= link_to category.theshiz, it_category_url(category.it, category) %> - Post (<%= category.contents.count.to_s %>)
 </li>
 <%end%>
 </ul>
@@ -14,7 +17,7 @@
 	<ul>
 	<% @contents.each do |content|%>
 <li>
-	<%= content.title %> - Comments(<%= content.comments.count %>)
+	<%= link_to content.title, it_category_content_url(content.category.it, content.category, content) %> - Comments(<%= content.comments.count %>)
 </li>
 <%end%>
 </div>
@@ -23,7 +26,7 @@
 	<ul>
 	<%  @commented_contents.sort_by{|c| c.comments.count}.reverse.each do |content|%>
 <li>
-	<%= content.title %>-comments(<%= content.comments.count %>)
+	<%= link_to content.title, it_category_content_url(content.category.it, content.category, content)%>-comments(<%= content.comments.count %>)
 </li>
 <%end%>
 </ul>

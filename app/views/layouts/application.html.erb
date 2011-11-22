@@ -95,7 +95,7 @@ $(function() {
 <hr style="border: 1px dashed #000;" />
 <div id="footer" style="width:%100;text-align: center;background-color: #F0F0F0;">
 <a href="" onclick="return showWhat();" class="smalllink">What is this?</a> | <a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
-|  <%= link_to('You', edit_user_registration_path, :class => "smalllink") %>
+|  <%= link_to('You', "/you/" + @it.to_param, :class => "smalllink") %>
 </div>
 <div id="rules" style="display: none;">
 <ol>
