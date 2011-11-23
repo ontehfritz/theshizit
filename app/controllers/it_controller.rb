@@ -7,6 +7,9 @@ class ItController < ApplicationController
 	def show
 	   @it = params[:id].nil? ? It.where(:is_current => true).first : It.find(params[:id])
 	   @categories = Category.find_all_by_it_id(@it.id)
+	   if(current_user != nil)
+	     @notifications = Notification.where(:user_id => current_user.id, :type_name => "Category").all
+	   end
 	end
 	
 	def you

@@ -4,6 +4,7 @@ gem 'rails', '3.1.1'
 #gem "rake", '0.8.7'
 gem 'rake', '0.9.2.2'
 gem 'exception_notification'
+gem 'delayed_job'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 

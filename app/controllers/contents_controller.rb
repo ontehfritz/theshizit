@@ -50,23 +50,28 @@ include ActionView::Helpers::SanitizeHelper
   # POST /contents.json
   def create
     it = It.find(params[:it_id])
-	if it.is_current
-		@content = params[:content][:type].constantize.new(params[:content])
-		@content.title = strip_tags(@content.title)
-		@content.theshiz = sanitize(@content.theshiz)
-		@content.user_id = current_user.id
+	  if it.is_current
+		  @content = params[:content][:type].constantize.new(params[:content])
+		  @content.title = strip_tags(@content.title)
+		  @content.theshiz = sanitize(@content.theshiz)
+		  @content.user_id = current_user.id
 
-		respond_to do |format|
-		  if @content.save
-			flash[:notice] = 'Content was successfully created.'
-			format.html { render action: "close", :layout => "dialog" }
-			format.json { render json: @content, status: :created, location: @content }
-		  else
-			format.html { render action: "new", :layout => "dialog" }
-			format.json { render json: @content.errors, status: :unprocessable_entity }
+		  respond_to do |format|
+		    if @content.save
+		       Subscription.create(:user_id => current_user.id, :type_name => @content.category.class.name, :type_id => @content.category.id)
+		       Subscription.create(:user_id => current_user.id, :type_name => @content.class.name, :type_id => @content.id)
+		       Subscription.delay.notify(@content)
+		       Subscription.delay.notify(@content.category)
+		       
+			     flash[:notice] = 'Content was successfully created.'
+			     format.html { render action: "close", :layout => "dialog" }
+			     format.json { render json: @content, status: :created, location: @content }
+		    else
+			     format.html { render action: "new", :layout => "dialog" }
+			     format.json { render json: @content.errors, status: :unprocessable_entity }
+		    end
 		  end
-		end
-	end
+	   end
   end
 
   # PUT /contents/1

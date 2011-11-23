@@ -25,7 +25,7 @@ $(document).ready(function() {
 <input type="button" id="add" value="Add" onclick="return showAddDialog()">
 <% end %>
 <div id="category">
-<%= render :partial => "categories/list", :locals=>{:categories=> @categories} %> 
+<%= render :partial => "categories/list", :locals=>{:categories=> @categories, :notifications => @notifications} %> 
 </div>
 
 <div id="divId" title="Modal Window">

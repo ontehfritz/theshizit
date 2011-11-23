@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111114180507) do
+ActiveRecord::Schema.define(:version => 20111123182443) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -44,21 +44,44 @@ ActiveRecord::Schema.define(:version => 20111114180507) do
     t.text     "theshiz"
     t.string   "image_type"
     t.string   "file_name"
-    t.binary   "image_data"
+    t.binary   "image_data",     :limit => 16777215
     t.string   "type"
-    t.integer  "comments_count", :default => 0
-    t.boolean  "in_recycling",   :default => false
+    t.integer  "comments_count",                     :default => 0
+    t.boolean  "in_recycling",                       :default => false
     t.integer  "category_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "its", :force => true do |t|
     t.string   "name"
     t.text     "message"
     t.integer  "categories_count", :default => 0
     t.boolean  "is_current"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "type_id"
+    t.string   "type_name"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -72,6 +95,14 @@ ActiveRecord::Schema.define(:version => 20111114180507) do
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "role_id"
     t.integer "user_id"
+  end
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "type_id"
+    t.string   "type_name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
