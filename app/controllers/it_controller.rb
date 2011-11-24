@@ -1,6 +1,7 @@
 class ItController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
 	def index
+	    @it = It.where(:is_current => true).first
 	    @its = It.find(:all, :order => "created_at DESC")
 	end
 	

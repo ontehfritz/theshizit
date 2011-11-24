@@ -34,7 +34,7 @@ class CommentsController < ApplicationController
 		@category = Category.find(params[:category_id])
 		@content = Content.find(params[:content_id])
 		@comment.content_id = params[:content_id]
-
+		
 		respond_to do |format|
 		  format.html { render :layout => "dialog" }# new.html.erb
 		  format.json { render json: @comment }
@@ -58,16 +58,23 @@ class CommentsController < ApplicationController
 
 		respond_to do |format|
 		  if @comment.save
-			flash[:notice] = 'Comment was successfully created.'
+		    Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+		                                              @comment.content.category.class.name, @comment.content.category)
+        Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                                                  @comment.content.class.name,  @comment.content.id)
+        Subscription.delay.notify(@comment)
+        Subscription.delay.notify(@comment.content)
+        Subscription.delay.notify(@comment.content.category)
+			  flash[:notice] = 'Comment was successfully created.'
 			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
-			format.html { render action: "close", :layout => "dialog"}
-			format.json { render json: @comment, status: :created, location: @comment }
+			  format.html { render action: "close", :layout => "dialog"}
+			  format.json { render json: @comment, status: :created, location: @comment }
 		  else
-			format.html { render action: "new" }
-			format.json { render json: @comment.errors, status: :unprocessable_entity }
+			  format.html { render action: "new" }
+			  format.json { render json: @comment.errors, status: :unprocessable_entity }
 		  end
 		end
-	end
+	 end
   end
   # PUT /comments/1
   # PUT /comments/1.json

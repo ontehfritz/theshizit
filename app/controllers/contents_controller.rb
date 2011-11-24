@@ -18,6 +18,12 @@ include ActionView::Helpers::SanitizeHelper
   def show
     @content = Content.find(params[:id])
     @it = @content.category.it
+    
+    if current_user != nil
+      Notification.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @content.id, @content.class.name])
+      comment_ids = @content.comments.map {|c| c.id}
+      @notifications = Notification.find(:all,:conditions => ["type_id in (?) and user_id = ? and type_name = 'Comment'", comment_ids, current_user.id])
+    end
 	
     respond_to do |format|
       format.html # show.html.erb
@@ -58,8 +64,10 @@ include ActionView::Helpers::SanitizeHelper
 
 		  respond_to do |format|
 		    if @content.save
-		       Subscription.create(:user_id => current_user.id, :type_name => @content.category.class.name, :type_id => @content.category.id)
-		       Subscription.create(:user_id => current_user.id, :type_name => @content.class.name, :type_id => @content.id)
+		       Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+		              @content.category.class.name, @content.category.id)
+		       Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+		              @content.class.name, @content.id)
 		       Subscription.delay.notify(@content)
 		       Subscription.delay.notify(@content.category)
 		       

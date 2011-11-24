@@ -17,15 +17,24 @@ class CategoriesController < ApplicationController
   def show
     @sort = params[:sort].nil? ? "pop" : params[:sort]
     @category = Category.find(params[:id])
-	page = params[:page].nil? ? 1 : params[:page]
-	if @sort == "recent"
-		@contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
-	else
-		#@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
-		@contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('comments_count DESC')
-	end
-	
-	@it = It.where(:is_current => true).first
+    
+    if current_user != nil
+      Notification.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @category.id, @category.class.name])
+    end
+    page = params[:page].nil? ? 1 : params[:page]
+	  if @sort == "recent"
+		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
+	  else
+		  #@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
+		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('comments_count DESC')
+	  end
+	 
+	  if(current_user != nil)
+	     content_ids = @contents.map {|c| c.id}
+       @notifications = Notification.find(:all,:conditions => ["type_id in (?) and user_id = ?", content_ids, current_user.id])
+    end
+    
+	  @it = It.where(:is_current => true).first
 	
     respond_to do |format|
       format.html # show.html.erb
