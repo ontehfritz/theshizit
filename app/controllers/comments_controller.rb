@@ -62,6 +62,8 @@ class CommentsController < ApplicationController
 		                                              @comment.content.category.class.name, @comment.content.category)
         Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
                                                   @comment.content.class.name,  @comment.content.id)
+        Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                                                  @comment.content.category.class.name, @comment.content.category.id)
         Subscription.delay.notify(@comment)
         Subscription.delay.notify(@comment.content)
         Subscription.delay.notify(@comment.content.category)

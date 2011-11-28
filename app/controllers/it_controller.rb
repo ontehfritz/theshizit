@@ -17,10 +17,10 @@ class ItController < ApplicationController
 	  @it = params[:id].nil? ? It.where(:is_current => true).first : It.find(params[:id])
 	  @categories = Category.find_all_by_user_id_and_it_id(current_user.id, @it.id).sort_by{|category| category.contents.count}
 	  @contents = Content.joins(:category).where(:user_id => current_user.id, 
-	             :categories => { :it_id => @it.id}).all.sort_by{|content| content.comments.count}
+	             :categories => { :it_id => @it.id, :in_recycling => false}).all.sort_by{|content| content.comments.count}
 	  @contents.reverse!
-	  @comments = Comment.joins(:content => [:category]).where(:user_id => current_user.id, 
-	         :categories => {:it_id => @it.id}).all
+	  @comments = Comment.joins(:content => [:category]).where(:user_id => current_user.id,
+	         :contents => {:in_recycling => false} ,:categories => {:it_id => @it.id, :in_recycling => false}).all
 	  
 	  @commented_contents = Array.new
 	  @comments.each do |comment|
