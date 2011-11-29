@@ -51,7 +51,9 @@ $(document).ready(function() {
 <% end %>
 <% @content.comments.each do |comment|  %>
 	<%= render :partial => "comments/comment", :locals=>{:comment=> comment, :notifications => @notifications} %> 
+	<% if current_user != nil %>
 	<% Notification.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, comment.id, comment.class.name]) %>
+	<% end %>
 <% end %>
 
 <div id="divId" title="Modal Window">

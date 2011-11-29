@@ -27,7 +27,7 @@
 			<a href="#" style="float:right;" class="toggle">+</a></span>
 		</div>
 	<% end %>
-	<div style="display:none;">
+	<div style="display:none;" class="s">
 	<% if content.class.name == "Pic" %>
 	<div>
 		<%= image_tag("/it/#{content.category.it_id}/categories/#{content.category.id}/contents/#{content.id}/pic", :alt => "Pic", :border => 1, :size => "80x80") %>
