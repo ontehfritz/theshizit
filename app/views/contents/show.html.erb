@@ -37,6 +37,10 @@ $(document).ready(function() {
 <!-- support gist and pastie -->
 <script src="<%= @content.theshiz %>"></script>
 <% elsif @content.class.name == "Link" %>
+<% if @content.is_youtube == true %>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/<%= @content.youtube_id %>?rel=0" frameborder="0" allowfullscreen></iframe>
+<br />
+<% end %>
 <a href="<%= @content.theshiz %>" target="_blank" class="smalllink"><%= @content.theshiz %></a>
 <% else %>
 <%= @content.theshiz.gsub("\n", "<br />").html_safe %>
