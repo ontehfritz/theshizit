@@ -9,6 +9,7 @@ Shizit::Application.routes.draw do
 		resources :contents do
 			member do
 				get  'pic'
+				post 'vote'
 			end
 			resources :comments
 		end

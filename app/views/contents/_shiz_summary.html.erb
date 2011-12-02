@@ -71,6 +71,8 @@
 <% when "Code" %>
 01
 <% end %>
+<%= link_to '(POW)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
+			:category_id => content.category.id, :id => content.id}, :class  => :pow,:method => :post  %>
 </span>
 </div>
 <div id="content_goodies" style="clear:both;font-size:10px;">Comments(<%= content.comments.count.to_s %>)</div>

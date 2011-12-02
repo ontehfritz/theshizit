@@ -4,6 +4,20 @@ include ActionView::Helpers::SanitizeHelper
   load_and_authorize_resource :only => [:delete, :update, :edit]
   # GET /contents
   # GET /contents.json
+  def vote
+    #@content = Content.find(params[:id])
+    #if VoteLog.has_user_voted(current_user, @content) != nil
+    #  @content.vote -= 1
+      #VoteLog.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @content.id, @content.class.name])
+    #else
+      #@content.vote += 1
+      #VoteLog.create(:user_id => current_user.id, :type_name => @content.class.name, :type_id => @content.id) 
+    #end
+    
+    #redirect_to it_category_url(@content.category.it, @content.category)
+
+  end
+  
   def index
     @contents = Content.all
 

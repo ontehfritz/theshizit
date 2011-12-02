@@ -26,6 +26,11 @@ div.box_round:hover
 }
 
 @font-face {
+font-family: Pow;
+src: url('http://127.0.0.1:3000/assets/BATMAN.TTF');
+}
+
+@font-face {
 font-family: Anime;
 src: url('http://127.0.0.1:3000/assets/animeace2_reg.ttf');
 }
@@ -85,6 +90,13 @@ font-family: Anime;
      1px -1px 0 #000,
     -1px 1px 0 #000,
      1px 1px 0 #000;
+ }
+ 
+ a.pow {
+   font-family: Pow;
+   font-size: 30px;
+   text-decoration: none;
+   text-shadow: none;
  }
  
  h3 {
