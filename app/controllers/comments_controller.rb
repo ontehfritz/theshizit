@@ -64,9 +64,9 @@ class CommentsController < ApplicationController
                                                   @comment.content.class.name,  @comment.content.id)
         Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
                                                   @comment.content.category.class.name, @comment.content.category.id)
-        Subscription.delay.notify(@comment)
-        Subscription.delay.notify(@comment.content)
-        Subscription.delay.notify(@comment.content.category)
+        Subscription.delay.notify(@comment, current_user)
+        Subscription.delay.notify(@comment.content, current_user)
+        Subscription.delay.notify(@comment.content.category, current_user)
 			  flash[:notice] = 'Comment was successfully created.'
 			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
 			  format.html { render action: "close", :layout => "dialog"}

@@ -68,8 +68,8 @@ include ActionView::Helpers::SanitizeHelper
 		              @content.category.class.name, @content.category.id)
 		       Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
 		              @content.class.name, @content.id)
-		       Subscription.delay.notify(@content)
-		       Subscription.delay.notify(@content.category)
+		       Subscription.delay.notify(@content, current_user)
+		       Subscription.delay.notify(@content.category, current_user)
 		       
 			     flash[:notice] = 'Content was successfully created.'
 			     format.html { render action: "close", :layout => "dialog" }
