@@ -71,8 +71,13 @@
 <% when "Code" %>
 01
 <% end %>
-<%= link_to '(POW)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
-			:category_id => content.category.id, :id => content.id}, :class  => :pow,:method => :post  %>
+<% if VoteLog.has_user_voted(current_user, content) %>
+<%= link_to '(T)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
+			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "Take back POW point"  %>
+<% else %>
+<%= link_to '(P)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
+			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "Give POW point"   %>
+<% end %>
 </span>
 </div>
 <div id="content_goodies" style="clear:both;font-size:10px;">Comments(<%= content.comments.count.to_s %>)</div>

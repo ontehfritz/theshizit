@@ -4,6 +4,21 @@ class CommentsController < ApplicationController
   load_and_authorize_resource :only => [:delete, :update, :edit]
   # GET /comments
   # GET /comments.json
+  
+  def vote
+    @comment = Comment.find(params[:comment_id])
+    if VoteLog.has_user_voted(current_user, @comment)
+      @comment.vote.nil? ? @comment.vote = 0 : @comment.vote -= 1
+      VoteLog.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @comment.id, @comment.class.name])
+    else
+      @comment.vote.nil? ? @comment.vote = 1 : @comment.vote += 1
+      VoteLog.create(:user_id => current_user.id, :type_name => @comment.class.name, :type_id => @comment.id) 
+    end
+    @comment.save
+    redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content)
+  end
+  
+  
   def index
     @comments = Comment.all
 
@@ -98,13 +113,13 @@ class CommentsController < ApplicationController
   # DELETE /comments/1.json
   def destroy
     @comment = Comment.find(params[:id])
-	@comment.in_recycling = true
-    #@comment.destroy
-	if @comment.save
-		respond_to do |format|
-		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
-		  format.json { head :ok }
-		end
-	end
+  	@comment.in_recycling = true
+      #@comment.destroy
+  	if @comment.save
+  		respond_to do |format|
+  		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
+  		  format.json { head :ok }
+  		end
+  	end
   end
 end

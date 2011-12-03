@@ -3,6 +3,10 @@ class VoteLog < ActiveRecord::Base
     vote = VoteLog.find_all_by_user_id_and_type_id_and_type_name(current_user.id, object_vote.id, 
                                           object_vote.class.name).first
                                           
-    !vote.nil?                                    
+    if vote == nil
+      false
+    else
+      true
+    end                                    
   end
 end
