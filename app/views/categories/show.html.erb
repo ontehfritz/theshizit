@@ -86,7 +86,7 @@ $(document).ready(function() {
 <% else %>
 <span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" %></span>
 <% end %>
-<a href="#" style="float:right;padding-right:5px;" name="expand">+</a>
+<a href="#" style="float:right;padding-right:5px;" name="expand">+</a><br />
 <% @contents.each do |content|  %>
 	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :notifications => @notifications} %> 
 <% end %>

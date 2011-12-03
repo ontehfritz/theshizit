@@ -71,12 +71,14 @@
 <% when "Code" %>
 01
 <% end %>
-<% if VoteLog.has_user_voted(current_user, content) %>
-<%= link_to '(T)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
-			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "Take back POW point"  %>
+<% if content.user_id != (current_user == nil ? 0 : current_user.id) && content.category.it.is_current %>
+<% if current_user != nil && VoteLog.has_user_voted(current_user, content) %>
+<%= link_to '(U)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
+			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "UN-POW"  %>
 <% else %>
 <%= link_to '(P)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
-			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "Give POW point"   %>
+			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "POW"   %>
+<% end %>
 <% end %>
 </span>
 </div>

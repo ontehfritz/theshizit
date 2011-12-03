@@ -46,9 +46,19 @@ $(document).ready(function() {
 <%= @content.theshiz.gsub("\n", "<br />").html_safe %>
 <% end %>
 </div>
+<% if @content.user_id != (current_user == nil ? 0 : current_user.id) && @content.category.it.is_current %>
+<% if current_user != nil && VoteLog.has_user_voted(current_user, @content) %>
+<%= link_to '(U)', {:controller => "contents", :action => 'vote', :it_id => @content.category.it_id, 
+			:category_id => @content.category.id, :id => @content.id}, :class  => :pow, :method => :post, :title => "UN-POW"  %>
+<% else %>
+<%= link_to '(P)', {:controller => "contents", :action => 'vote', :it_id => @content.category.it_id, 
+			:category_id => @content.category.id, :id => @content.id}, :class  => :pow, :method => :post, :title => "POW"   %>
+<% end %>
+<% end%>
 <br />
-<br />
-<div id="content_goodies">Comments(<%= @content.comments.count.to_s %>)</div>
+<div id="content_goodies">
+Comments(<%= @content.comments.count.to_s %>)
+</div>
 </div>
 <% if @content.category.it.is_current %>
 	<input type="button" id="add" value="Add" onclick="return showAddDialog()">

@@ -9,10 +9,10 @@
 		<% yours = "background-color: Green;" %>
 	<% end %>
 	<% if category.is_nsfw %>
-		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.contents.where(:in_recycling => false).count * 1)).to_s + "px;" + yours.to_s, 
+		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + "px;" + yours.to_s, 
 		:confirm => 'You must be 18 or over to views this content?' %><-(NSFW)
 	<% else %>
-		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.contents.where(:in_recycling => false).count * 1)).to_s + "px;" + yours.to_s %>
+		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + "px;" + yours.to_s %>
 	<% end %>
 	<% if can? :delete, category %><%= link_to "X", it_category_path(category.it, category), :confirm => 'Are you sure?', :method => :delete %><% end %>
 </span>

@@ -8,4 +8,16 @@ class Category < ActiveRecord::Base
 	def to_param
 		"#{id}-#{theshiz.gsub(/[^a-z0-9]+/i, '-')}"
 	end
+	
+	def get_total_points
+	  total = 0
+	  self.contents.each do |content|
+	    total += (content.vote == nil ? 0 : content.vote)
+	    content.comments.each do |comment|
+	      total += (comment.vote == nil ? 0 : comment.vote)
+	    end
+	  end
+	  
+	  total
+	end
 end

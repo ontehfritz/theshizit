@@ -26,7 +26,7 @@ class CategoriesController < ApplicationController
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
 	  else
 		  #@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
-		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('comments_count DESC')
+		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('vote DESC')
 	  end
 	 
 	  if(current_user != nil)

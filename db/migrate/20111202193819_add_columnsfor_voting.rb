@@ -1,7 +1,7 @@
 class AddColumnsforVoting < ActiveRecord::Migration
   def up
-     add_column :contents, :vote, :integer
-     add_column :comments, :vote, :integer
+     add_column :contents, :vote, :integer, :default => 0
+     add_column :comments, :vote, :integer, :default => 0
   end
 
   def down

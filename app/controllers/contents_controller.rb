@@ -14,7 +14,8 @@ include ActionView::Helpers::SanitizeHelper
       VoteLog.create(:user_id => current_user.id, :type_name => @content.class.name, :type_id => @content.id) 
     end
     @content.save
-    redirect_to it_category_url(@content.category.it, @content.category)
+    #redirect_to it_category_url(@content.category.it, @content.category)
+    redirect_to(:back) 
   end
   
   def index
