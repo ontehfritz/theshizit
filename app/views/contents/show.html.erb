@@ -30,7 +30,13 @@ $(document).ready(function() {
 <h3><%= @content.title %></h3>
 </div>
 <% if @content.class.name == "Pic" %>
-	<div><%= image_tag("/it/#{@content.category.it_id}/categories/#{@content.category.id}/contents/#{@content.id}/pic", :alt => "Pic", :border => 1) %></div>
+	<div>
+		<% if @content.image_data != nil %>
+			<%= image_tag("/it/#{@content.category.it_id}/categories/#{@content.category.id}/contents/#{@content.id}/pic", :alt => "Pic", :border => 1) %>
+		<% else %>
+			<%= image_tag(@content.file_name, :alt => "Pic", :border => 1) %>
+		<% end%>
+	</div>
 <% end %>
 <div id="content_shiz">
 <% if @content.class.name == "Code" %>

@@ -20,7 +20,9 @@
   
   <div id="content_pic" style="display:none">
     Please select an image: <br />
-	<%= f.file_field :image_file %>
+	<%= f.file_field :image_file %> <br /> or
+	Url: <br />
+	<%= f.text_area :file_name, :size=>"40x5" %>
   </div>
   
   <div id="content_shiz" style="display:none">

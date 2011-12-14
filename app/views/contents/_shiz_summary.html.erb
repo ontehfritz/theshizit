@@ -30,7 +30,12 @@
 	<div style="display:none;" class="s">
 	<% if content.class.name == "Pic" %>
 	<div>
-		<%= image_tag("/it/#{content.category.it_id}/categories/#{content.category.id}/contents/#{content.id}/pic", :alt => "Pic", :border => 1, :size => "80x80") %>
+		<% if content.image_data != nil %>
+			<%= image_tag("/it/#{content.category.it_id}/categories/#{content.category.id}/contents/#{content.id}/pic", :alt => "Pic", :border => 1, :size => "100x100") %>
+		<% else %>
+			<%= image_tag(content.file_name, :alt => "Pic", :border => 1, :size => "100x100") %>
+		<% end%>
+		
 	</div>
 	<% end %>
 	<div class="content_shiz">
