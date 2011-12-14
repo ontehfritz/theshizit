@@ -1,4 +1,4 @@
 class Rant < Content
-	validates :theshiz, :length => { :maximum => 512 }, :presence => true
+	validates :theshiz, :length => { :maximum => 1024 }, :presence => true
 	validates :title, :presence => true
 end

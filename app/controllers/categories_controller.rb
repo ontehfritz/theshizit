@@ -72,6 +72,9 @@ class CategoriesController < ApplicationController
 		@category.it = It.where(:is_current => true).first
 		@category.user_id = current_user.id
 		
+		Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                  @category.class.name, @category.id)
+		
 		respond_to do |format|
 		  if @category.save
 			flash[:notice] = 'Category was successfully created.'

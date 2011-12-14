@@ -93,6 +93,15 @@ font-family: Anime;
  }
  
  a.pow {
+   color: black;
+   font-family: Pow;
+   font-size: 20px;
+   text-decoration: none;
+   text-shadow: none;
+ }
+ 
+ a.pow:hover {
+   color: red;
    font-family: Pow;
    font-size: 20px;
    text-decoration: none;

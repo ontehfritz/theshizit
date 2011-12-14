@@ -70,6 +70,8 @@
 ?
 <% when "Code" %>
 01
+<% when "Code" %>
+:)
 <% end %>
 <% if content.user_id != (current_user == nil ? 0 : current_user.id) && content.category.it.is_current %>
 <% if current_user != nil && VoteLog.has_user_voted(current_user, content) %>

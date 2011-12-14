@@ -53,9 +53,10 @@ include ActionView::Helpers::SanitizeHelper
 		@content = Content.new
 		@content.category = Category.find(params[:category_id])
 		@content.category.it = it;
+		@it = @content.category.it
 		
 		respond_to do |format|
-		  format.html  {render :layout => "dialog"}# new.html.erb
+		  format.html 
 		  format.json { render json: @content }
 		end
 	end
@@ -75,6 +76,7 @@ include ActionView::Helpers::SanitizeHelper
 		  @content.title = strip_tags(@content.title)
 		  @content.theshiz = sanitize(@content.theshiz)
 		  @content.user_id = current_user.id
+		  @it = @content.category.it
 
 		  respond_to do |format|
 		    if @content.save
@@ -86,10 +88,10 @@ include ActionView::Helpers::SanitizeHelper
 		       Subscription.delay.notify(@content.category, current_user)
 		       
 			     flash[:notice] = 'Content was successfully created.'
-			     format.html { render action: "close", :layout => "dialog" }
+			     format.html { redirect_to it_category_url(@content.category.it, @content.category) }
 			     format.json { render json: @content, status: :created, location: @content }
 		    else
-			     format.html { render action: "new", :layout => "dialog" }
+			     format.html { render action: "new"}
 			     format.json { render json: @content.errors, status: :unprocessable_entity }
 		    end
 		  end
