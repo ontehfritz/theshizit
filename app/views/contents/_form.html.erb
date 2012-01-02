@@ -17,7 +17,10 @@
 	  <%= f.label :title %><br />
 	  <%= f.text_field :title %>
   </div>
-  
+  <div id="content_code">
+  	<%= f.label :file_type, "Language" %><br />
+  	<%= f.text_field :file_type %>
+  </div>
   <div id="content_pic" style="display:none">
     Please select an image: <br />
 	<%= f.file_field :image_file %> <br /> or

@@ -118,22 +118,21 @@ include ActionView::Helpers::SanitizeHelper
   # DELETE /contents/1.json
   def destroy
     @content = Content.find(params[:id])
-	@content.in_recycling = true
+	  @content.in_recycling = true
     #@content.destroy
 
     respond_to do |format|
-		if @content.save
-		  format.html { redirect_to it_category_url(@content.category.it, @content.category) }
-		  format.json { head :ok }
-		end
+		  if @content.save
+		    format.html { redirect_to it_category_url(@content.category.it, @content.category) }
+		    format.json { head :ok }
+		  end
     end
   end
   
   def pic
-	@content = Content.find(params[:id])
-
+	  @content = Content.find(params[:id])
     @image = @content.image_data
-    send_data @image, :type => @content.image_type, 
+    send_data @image, :type => @content.file_type, 
         :filename => @content.file_name, :disposition => 'inline'
   end
 end

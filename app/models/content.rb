@@ -15,7 +15,7 @@ class Content < ActiveRecord::Base
 	
 	def image_file=(input_data)
 		self.file_name = input_data.original_filename
-		self.image_type = input_data.content_type.chomp
+		self.file_type = input_data.content_type.chomp
 		self.image_data = input_data.read
 	end
 	

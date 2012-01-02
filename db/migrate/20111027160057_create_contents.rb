@@ -3,7 +3,7 @@ class CreateContents < ActiveRecord::Migration
     create_table :contents do |t|
 	  t.string :title
 	  t.text :theshiz
-	  t.string :image_type
+	  t.string :file_type
     t.string :file_name
     t.binary :image_data, :limit => 10.megabyte
 	  t.string :type

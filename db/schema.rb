@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111202193819) do
+ActiveRecord::Schema.define(:version => 20120101184407) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20111202193819) do
   create_table "contents", :force => true do |t|
     t.string   "title"
     t.text     "theshiz"
-    t.string   "image_type"
+    t.string   "file_type"
     t.string   "file_name"
     t.binary   "image_data",     :limit => 16777215
     t.string   "type"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20111202193819) do
     t.string   "locked_by"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "queue"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"

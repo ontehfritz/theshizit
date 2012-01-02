@@ -11,6 +11,7 @@ $(document).ready(function () {
 				$("#content_shiz").show();
 				$("#content_title").show();
 				$("#post").show();
+				$("#content_code").hide();
 				break;
 			case 'Link':
 				$("#content_pic").hide();
@@ -19,6 +20,7 @@ $(document).ready(function () {
 				$("#content_shiz").show();
 				$("#content_title").show();
 				$("#post").show();
+				$("#content_code").hide();
 				break;
 			case 'Rant':
 				$("#content_pic").hide();
@@ -29,6 +31,7 @@ $(document).ready(function () {
 				$("#content_shiz").show();
 				$("#content_title").show();
 				$("#post").show();
+				$("#content_code").hide();
 				break;
 			case 'Blog':
 				$("#content_pic").hide();
@@ -38,6 +41,7 @@ $(document).ready(function () {
 				$("#content_shiz").show();
 				$("#content_title").show();
 				$("#post").show();
+				$("#content_code").hide();
 				break;
 			case 'Question':
 				$("#content_title").hide();
@@ -46,10 +50,12 @@ $(document).ready(function () {
 				$("#content_shiz").show();
 				$("#content_shiz textarea").attr("rows", "5");
 				$("#post").show();
+				$("#content_code").hide();
 				break;
 			case 'Code':
 				$("#content_pic").hide();
-				$("#content_shiz label").text("Link (Only accepts from Gist and Pastie)");
+				$("#content_shiz label").text("Code");
+				$("#content_code").show();
 				$("#content_title label").text("Title");
 				$("#content_shiz textarea").attr("rows", "5");
 				$("#content_shiz").show();
@@ -61,6 +67,7 @@ $(document).ready(function () {
 				$("#content_title").hide();
 				$("#content_pic").hide();
 				$("#post").hide();
+				$("#content_code").hide();
 				break;
 		}
     });
