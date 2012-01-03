@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
 
   create_table "comments", :force => true do |t|
     t.text     "theshiz"
+    t.integer  "vote",         :default => 0
     t.boolean  "in_recycling", :default => false
     t.integer  "user_id"
     t.integer  "content_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vote"
   end
 
   create_table "content_types", :force => true do |t|
@@ -47,13 +47,13 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
     t.string   "file_name"
     t.binary   "image_data",     :limit => 16777215
     t.string   "type"
+    t.integer  "vote",                               :default => 0
     t.integer  "comments_count",                     :default => 0
     t.boolean  "in_recycling",                       :default => false
     t.integer  "category_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "vote"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
   create_table "notifications", :force => true do |t|
     t.integer  "type_id"
     t.string   "type_name"
+    t.integer  "parent_type_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

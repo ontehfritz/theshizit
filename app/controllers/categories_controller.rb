@@ -76,16 +76,16 @@ class CategoriesController < ApplicationController
                   @category.class.name, @category.id)
 		
 		respond_to do |format|
-		  if @category.save
-			flash[:notice] = 'Category was successfully created.'
-			format.html { render action: "close",:layout => "dialog" }
-			format.json { render json: @category, status: :created, location: @category }
-		  else
-			format.html { render action: "new", layout: "dialog" }
-			format.json { render json: @category.errors, status: :unprocessable_entity }
-		  end
-		end
-	end
+  		if @category.save
+  			flash[:notice] = 'Category was successfully created.'
+  			format.html { render action: "close",:layout => "dialog" }
+  			format.json { render json: @category, status: :created, location: @category }
+  		else
+  			format.html { render action: "new", layout: "dialog" }
+  			format.json { render json: @category.errors, status: :unprocessable_entity }
+  		end
+  	end
+	 end
   end
 
   # PUT /categories/1
@@ -108,14 +108,14 @@ class CategoriesController < ApplicationController
   # DELETE /categories/1.json
   def destroy
     @category = Category.find(params[:id])
-	@category.in_recycling = true
+	  @category.in_recycling = true
     #@category.destroy
 
-	if @category.save
-		respond_to do |format|
-		  format.html { redirect_to "/" }
-		  format.json { head :ok }
-		end
-	end
+	  if @category.save
+		  respond_to do |format|
+		    format.html { redirect_to "/" }
+		    format.json { head :ok }
+		  end
+	  end
   end
 end
