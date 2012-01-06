@@ -1,6 +1,9 @@
 class Subscription < ActiveRecord::Base
 
   def self.notify(object, current_user)
+    #performance hit cache or hardcode
+    content = ContentType.find(:all, :select => "type_name").map(&:type_name)
+    #puts content
     
     if object.class.name == "Comment"
       subscriptions = Subscription.where(:type_name => object.content.class.name, :type_id => object.content.id).all
@@ -15,7 +18,7 @@ class Subscription < ActiveRecord::Base
         
         if object.class.name == "Comment"
           parent_id = object.content.id
-        elsif object.base_class.name == "Content"
+        elsif content.index(object.class.name) != nil
           parent_id = object.category.id
         else
           parent_id = 0

@@ -13,6 +13,10 @@ class Content < ActiveRecord::Base
 		super
 	end
 	
+	def came_from
+	  self.name
+	end
+	
 	def image_file=(input_data)
 		self.file_name = input_data.original_filename
 		self.file_type = input_data.content_type.chomp

@@ -10,6 +10,17 @@ class ItController < ApplicationController
 	   @categories = Category.find_all_by_it_id(@it.id)
 	   if(current_user != nil)
 	     @notifications = Notification.where(:user_id => current_user.id, :type_name => "Category").all
+	     if @notifications != nil
+  	     @notifications.each do |notification|
+  	       seek = Notification.find_all_by_user_id_and_parent_type_id(current_user.id, notification.type_id)
+  	       if seek.empty?
+  	         Notification.delete(notification.id)
+  	       end
+  	     end
+	     end
+	     
+	     @notifications = Notification.where(:user_id => current_user.id, :type_name => "Category").all
+	     
 	   end
 	end
 	
