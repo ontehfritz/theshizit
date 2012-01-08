@@ -2,4 +2,69 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  title: ":-C~ theSh!z!t: the stuff, the real deal"
+  meta_keywords: "anonymous messageboard, theshizit, shizit, images, links, post, comments"
+  meta_title: "theshizit: the stuff, the real deal"
+  meta_description: "theshizit: the stuff, the real deal"
+  page_header_title: ":-C~ theSh!z!t"
+  add_category_button: "Add"
+  add_category_title: "Add some shiz"
+  create_category_button: "Create Category"
+  archive_link: "Archive"
+  
+  activerecord:
+    errors:
+      models:
+        category:
+          attributes:
+            theshiz:
+              blank: "cannot be blank!"
+        comment:
+          attributes:
+            theshiz: 
+              blank: "cannot be blank!"
+        blog:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+        code:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+        link:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+        pic:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+            file_name:
+              blank: "cannot be blank!"
+        link:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+        question:
+          attributes:
+            theshiz:
+              blank: "cannot be blank!"
+        rant:
+          attributes:
+            title:
+              blank: "cannot be blank!"
+            theshiz:
+              blank: "cannot be blank!"
+           
+            
+  

@@ -1,6 +1,6 @@
 <script>
 function showAddDialog(){
-	$("#divId").dialog({ title: 'Add Some Shiz' });
+	$("#divId").dialog({ title: '<%=t :add_category_title %>' });
    	$("#divId").dialog("open");
    	$("#modalIframeId").attr("src","<%= new_it_category_url(@it) %>");
    	return false;
@@ -19,10 +19,10 @@ $(document).ready(function() {
 		});
 });
 </script>
-<span><%= @it.message %></span><span style="float:right;">:)<%= link_to "Archives" , it_index_path %>(:</span>
+<span><%= @it.message %></span><span style="float:right;">:)<%= link_to t(:archive_link) , it_index_path %>(:</span>
 <br />
 <% if @it.is_current %>
-<input type="button" id="add" value="Add" onclick="return showAddDialog()">
+<input type="button" id="add" value="<%=t :add_category_button %>" onclick="return showAddDialog()">
 <% end %>
 <div id="category" style="width:70%;">
 <%= render :partial => "categories/list", :locals=>{:categories=> @categories, :notifications => @notifications} %> 
