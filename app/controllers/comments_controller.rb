@@ -115,11 +115,13 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   	@comment.in_recycling = true
       #@comment.destroy
-  	if @comment.save
-  		respond_to do |format|
-  		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
-  		  format.json { head :ok }
-  		end
+    if (can? :delete, @comment) || (current_user.id == @comment.user_id)
+    	if @comment.save
+    		respond_to do |format|
+    		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
+    		  format.json { head :ok }
+    		end
+    	end
   	end
   end
 end

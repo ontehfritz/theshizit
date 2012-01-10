@@ -122,9 +122,11 @@ include ActionView::Helpers::SanitizeHelper
     #@content.destroy
 
     respond_to do |format|
-		  if @content.save
-		    format.html { redirect_to it_category_url(@content.category.it, @content.category) }
-		    format.json { head :ok }
+      if (can? :delete, @content) || current_user.id == @content.user_id
+  		  if @content.save
+  		    format.html { redirect_to it_category_url(@content.category.it, @content.category) }
+  		    format.json { head :ok }
+  		  end
 		  end
     end
   end

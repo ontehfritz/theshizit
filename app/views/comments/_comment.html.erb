@@ -1,8 +1,10 @@
 <div id="comment_item">
 <div id="comment_user"></div>
 <div id="comment_shiz">
-<% if can? :delete, comment %><%= link_to "X", it_category_content_comment_path(comment.content.category.it, 
-														comment.content.category, comment.content, comment), :confirm => 'Are you sure?', :method => :delete %><% end %>
+<% if (can? :delete, comment) || (current_user.id == comment.user_id) %>
+<%= link_to "X", it_category_content_comment_path(comment.content.category.it, 
+	comment.content.category, comment.content, comment), :confirm => 'Are you sure?', :method => :delete %>
+<% end %>
 <% if comment.user_id != (current_user == nil ? 0 : current_user.id) && comment.content.category.it.is_current%>
 <% if current_user != nil && VoteLog.has_user_voted(current_user, comment) %>
 		<%= link_to '(U)', {:controller => "comments", :action => 'vote', :it_id => comment.content.category.it_id, 

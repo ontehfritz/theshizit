@@ -26,7 +26,9 @@ $(document).ready(function() {
 	:<%= @content.title %>
 <% end %>
 <div id="content_item">
-<% if can? :delete, @content %><%= link_to "X", [@content.category.it, @content.category, @content], :confirm => 'Are you sure?', :method => :delete %><% end %>
+<% if (can? :delete, @content) || current_user.id == @content.user_id %>
+<%= link_to "X", [@content.category.it, @content.category, @content], :confirm => 'Are you sure?', :method => :delete %>
+<% end %>
 <div id="content_title">
 <h3><%= @content.title %></h3>
 </div>
