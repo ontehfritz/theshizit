@@ -43,9 +43,7 @@
 			<% case content.class.name %>
 			<% when "Pic" %>
 				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
-			<% when "Rant" %>
-				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
-			<% when "Blog" %>
+			<% when "Text" %>
 				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
 			<% when "Question" %>
 				<%= content.theshiz %>
@@ -67,18 +65,16 @@
 <% case content.class.name %>
 <% when "Pic" %>
 :)~
-<% when "Rant" %>
+<% when "Text" %>
 >:-C
 <% when "Blog" %>
 :&
 <% when "Question" %>
 ?
 <% when "Code" %>
-01
-<% when "Code" %>
-:)
+{01}
 <% end %>
-<% if content.user_id != (current_user == nil ? 0 : current_user.id) && content.category.it.is_current %>
+<% if content.user_id != (current_user == nil ? 0 : current_user.id) && content.category.it.is_default %>
 <% if current_user != nil && VoteLog.has_user_voted(current_user, content) %>
 <%= link_to '(U)', {:controller => "contents", :action => 'vote', :it_id => content.category.it_id, 
 			:category_id => content.category.id, :id => content.id}, :class  => :pow, :method => :post, :title => "UN-POW"  %>

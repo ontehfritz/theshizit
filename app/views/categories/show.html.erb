@@ -62,7 +62,7 @@ $(document).ready(function() {
 <% end %>
 <h3><%= @category.theshiz %></h3>
 <div id="content" style="float:left;border: 0px dotted black;width:80%;">
-<% if @category.it.is_current %>
+<% if @category.it.is_default %>
 <%= link_to "add", new_it_category_content_url(@it, @category) %>
 <% end %>
 <% if @sort == "recent" %>

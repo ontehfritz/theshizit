@@ -43,7 +43,7 @@ class CommentsController < ApplicationController
   # GET /comments/new.json
   def new
 	it = It.find(params[:it_id])
-	if it.is_current
+	if it.is_default
 		@comment = Comment.new
 		@it = it
 		@category = Category.find(params[:category_id])
@@ -66,32 +66,32 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     it = It.find(params[:it_id])
-	if it.is_current
-		@comment = Comment.new(params[:comment])
-		@comment.theshiz = sanitize(@comment.theshiz)
-		@comment.user_id = current_user.id
-
-		respond_to do |format|
-		  if @comment.save
-		    Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-		                                              @comment.content.category.class.name, @comment.content.category)
-        Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                                                  @comment.content.class.name,  @comment.content.id)
-        Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                                                  @comment.content.category.class.name, @comment.content.category.id)
-        Subscription.delay.notify(@comment, current_user)
-        Subscription.delay.notify(@comment.content, current_user)
-        Subscription.delay.notify(@comment.content.category, current_user)
-			  flash[:notice] = 'Comment was successfully created.'
-			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
-			  format.html { render action: "close", :layout => "dialog"}
-			  format.json { render json: @comment, status: :created, location: @comment }
-		  else
-			  format.html { render action: "new" }
-			  format.json { render json: @comment.errors, status: :unprocessable_entity }
-		  end
-		end
-	 end
+  	if it.is_default
+  		@comment = Comment.new(params[:comment])
+  		@comment.theshiz = sanitize(@comment.theshiz)
+  		@comment.user_id = current_user.id
+  
+  		respond_to do |format|
+  		  if @comment.save
+  		    Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+  		                                              @comment.content.category.class.name, @comment.content.category)
+          Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                                                    @comment.content.class.name,  @comment.content.id)
+          Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                                                    @comment.content.category.class.name, @comment.content.category.id)
+          Subscription.delay.notify(@comment, current_user)
+          Subscription.delay.notify(@comment.content, current_user)
+          Subscription.delay.notify(@comment.content.category, current_user)
+  			  flash[:notice] = 'Comment was successfully created.'
+  			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
+  			  format.html { render action: "close", :layout => "dialog"}
+  			  format.json { render json: @comment, status: :created, location: @comment }
+  		  else
+  			  format.html { render action: "new" }
+  			  format.json { render json: @comment.errors, status: :unprocessable_entity }
+  		  end
+  		end
+  	 end
   end
   # PUT /comments/1
   # PUT /comments/1.json

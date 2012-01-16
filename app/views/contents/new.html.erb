@@ -22,20 +22,9 @@ $(document).ready(function () {
 				$("#post").show();
 				$("#content_code").hide();
 				break;
-			case 'Rant':
+			case 'Text':
 				$("#content_pic").hide();
-				$("#content_title label").text("Subject");
-				$("#content_shiz label").text("Rant away!");
-				$("#content_shiz textarea").attr("rows", "20");
-				$("#content_shiz textarea").attr("cols", "50");
-				$("#content_shiz").show();
-				$("#content_title").show();
-				$("#post").show();
-				$("#content_code").hide();
-				break;
-			case 'Blog':
-				$("#content_pic").hide();
-				$("#content_shiz label").text("Blog it");
+				$("#content_shiz label").text("Start Typing:");
 				$("#content_shiz textarea").attr("rows", "20");
 				$("#content_shiz textarea").attr("cols", "50");
 				$("#content_shiz").show();

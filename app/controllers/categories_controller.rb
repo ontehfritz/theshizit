@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
        @notifications = Notification.find(:all,:conditions => ["type_id in (?) and user_id = ?", content_ids, current_user.id])
     end
     
-	  @it = It.where(:is_current => true).first
+	  @it = It.where(:is_default => true).first
 	
     respond_to do |format|
       format.html # show.html.erb
@@ -46,9 +46,9 @@ class CategoriesController < ApplicationController
   # GET /categories/new.json
   def new
 	it = It.find(params[:it_id])
-	if it.is_current
+	if it.is_default
 		@category = Category.new
-		@category.it = It.where(:is_current => true).first
+		@category.it = It.where(:is_default => true).first
 		
 
 		respond_to do |format|
@@ -67,9 +67,9 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
 	it = It.find(params[:it_id])
-	if it.is_current
+	if it.is_default
 		@category = Category.new(params[:category])
-		@category.it = It.where(:is_current => true).first
+		@category.it = It.where(:is_default => true).first
 		@category.user_id = current_user.id
 		
 		Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 

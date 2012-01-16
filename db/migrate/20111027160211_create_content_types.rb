@@ -6,9 +6,8 @@ class CreateContentTypes < ActiveRecord::Migration
     end
 	
 	ContentType.create :type_name => "Pic"
-	ContentType.create :type_name => "Rant"
+	ContentType.create :type_name => "Text"
 	ContentType.create :type_name => "Code"
-	ContentType.create :type_name => "Blog"
 	ContentType.create :type_name => "Link"
 	ContentType.create :type_name => "Question"
   end

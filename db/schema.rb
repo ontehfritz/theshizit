@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120101184407) do
+ActiveRecord::Schema.define(:version => 20120115191500) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
     t.boolean  "in_recycling", :default => false
     t.integer  "user_id"
     t.integer  "content_id"
+    t.integer  "tone_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -74,9 +75,10 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
 
   create_table "its", :force => true do |t|
     t.string   "name"
-    t.text     "message"
+    t.text     "description"
     t.integer  "categories_count", :default => 0
-    t.boolean  "is_current"
+    t.boolean  "locked"
+    t.boolean  "is_default"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -105,6 +107,12 @@ ActiveRecord::Schema.define(:version => 20120101184407) do
     t.integer  "type_id"
     t.string   "type_name"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tones", :force => true do |t|
+    t.string   "mood"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

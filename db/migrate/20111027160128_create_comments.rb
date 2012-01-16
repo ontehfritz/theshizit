@@ -7,6 +7,7 @@ class CreateComments < ActiveRecord::Migration
 	  
 	  t.references :user
 	  t.references :content
+	  t.references :tone
     t.timestamps
     end
   end

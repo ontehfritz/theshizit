@@ -2,12 +2,14 @@ class CreateIts < ActiveRecord::Migration
   def change
     create_table :its do |t|
 	  t.string :name
-	  t.text :message
+	  t.text :description
 	  t.integer :categories_count, :default => 0
-	  t.boolean :is_current
-      t.timestamps
-    end
+	  t.boolean :locked
+	  t.boolean :is_default
+    t.timestamps
+  end
 	
-	It.create :name => "BETA test!", :message => "Beta Test - new shiz period begins Decemeber 1", :is_current => true
+	It.create :name => "BETA test!", :description => "testing the shizit, post your shiz", 
+	         :is_default => true, :locked => false
   end
 end

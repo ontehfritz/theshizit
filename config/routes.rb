@@ -1,6 +1,7 @@
 Shizit::Application.routes.draw do
- match '/you/:id' => 'it#you'
- resources :it do
+ match '/you/:id' => 'its#you'
+ resources :its
+ resources :its do
 	 member do
 		get 'list'
 		get 'you'
@@ -69,7 +70,7 @@ Shizit::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'it#show'
+   root :to => 'its#show'
 
   # See how all your routes lay out with "rake routes"
 

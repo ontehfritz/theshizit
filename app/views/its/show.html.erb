@@ -19,9 +19,12 @@ $(document).ready(function() {
 		});
 });
 </script>
-<span><%= @it.message %></span><span style="float:right;">:)<%= link_to t(:archive_link) , it_index_path %>(:</span>
+<span style="font-family: Anime;color: black;font-size: 18px;text-decoration: underline;text-shadow: none;font-weight: bold;"><%= @it.name %></span>
+<span style="float:right;">:)<%= link_to t(:archive_link) , its_path %>(:</span>
 <br />
-<% if @it.is_current %>
+<span><%= @it.description %></span>
+<br />
+<% if @it.is_default %>
 <input type="button" id="add" value="<%=t :add_category_button %>" onclick="return showAddDialog()">
 <% end %>
 <div id="category" style="width:70%;">

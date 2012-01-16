@@ -49,17 +49,17 @@ include ActionView::Helpers::SanitizeHelper
   # GET /contents/new.json
   def new
     it = It.find(params[:it_id])
-	if it.is_current
-		@content = Content.new
-		@content.category = Category.find(params[:category_id])
-		@content.category.it = it;
-		@it = @content.category.it
+	  if it.is_default
+  		@content = Content.new
+  		@content.category = Category.find(params[:category_id])
+  		@content.category.it = it;
+  		@it = @content.category.it
 		
-		respond_to do |format|
-		  format.html 
-		  format.json { render json: @content }
-		end
-	end
+  		respond_to do |format|
+  		  format.html 
+  		  format.json { render json: @content }
+  		end
+	  end
   end
 
   # GET /contents/1/edit
@@ -71,7 +71,7 @@ include ActionView::Helpers::SanitizeHelper
   # POST /contents.json
   def create
     it = It.find(params[:it_id])
-	  if it.is_current
+	  if it.is_default
 		  @content = params[:content][:type].constantize.new(params[:content])
 		  @content.title = strip_tags(@content.title)
 		  @content.theshiz = sanitize(@content.theshiz)
