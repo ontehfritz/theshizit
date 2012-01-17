@@ -14,12 +14,21 @@ class ItsController < ApplicationController
   
   def create
     if (can? :create, @comment)
-      @it = Comment.new(params[:it])
+      @it = It.new(params[:it])
       
       respond_to do |format|
         if @it.save
           flash[:notice] = 'Comment was successfully created.'
-        #render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
+          if @it.is_default
+            @its = It.find(:all)
+            @its.each do |t|
+              if t.id != @it.id
+                t.is_default = false
+                t.save
+              end
+            end
+          end
+          
           format.html { render action: "close", :layout => "dialog"}
           format.json { render json: @comment, status: :created, location: @comment }
         else

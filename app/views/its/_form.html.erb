@@ -14,6 +14,15 @@
   <%= f.text_field :name %>
   </div>
   <div>
+  <%= f.label :is_default %>
+  <%= f.check_box :is_default %><br />
+  </div>
+  <div>
+  <%= f.label :locked %>
+  <%= f.check_box :locked %><br />
+  </div>
+  
+  <div>
   <%= f.label :description %><br />
   <%= f.text_area :description %>
   </div>
