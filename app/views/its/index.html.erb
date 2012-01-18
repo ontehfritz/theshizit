@@ -6,6 +6,7 @@
 	<% else %>
 		<span><%= link_to it.name,  it %></span>
 	<% end %>
+	<%= link_to "Edit", edit_it_path(it)%>
 	</div>
 	<div><%= it.created_at %></div>
 <div>
