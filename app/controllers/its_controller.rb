@@ -2,37 +2,37 @@ class ItsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
   
   def new 
+    @new_it = It.new 
+    @it = It.where(:is_default => true).first
     if (can? :create, @comment)
-      @it = It.new 
-      
       respond_to do |format|
-        format.html { render :layout => "dialog" }# new.html.erb
-        format.json { render json: @it }
+        format.html # new.html.erb
+        format.json { render json: @new_it }
       end
     end
   end
   
   def create
-    @it = It.new(params[:it])
-    if (can? :create, @it)
+    @new_it = It.new(params[:it])
+    if (can? :create, @new_it)
       respond_to do |format|
-        if @it.save
+        if @new_it.save
           flash[:notice] = 'It was successfully created.'
-          if @it.is_default
+          if @new_it.is_default
             @its = It.find(:all)
             @its.each do |t|
-              if t.id != @it.id
+              if t.id != @new_it.id
                 t.is_default = false
                 t.save
               end
             end
           end
           
-          format.html { render action: "close", :layout => "dialog"}
-          format.json { render json: @comment, status: :created, location: @comment }
+          format.html { redirect_to its_path, notice: 'It was successfully created.' }
+          format.json { render json: @new_it, status: :created, location: @new_it }
         else
           format.html { render action: "new" }
-          format.json { render json: @it.errors, status: :unprocessable_entity }
+          format.json { render json: @new_it.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -63,18 +63,19 @@ class ItsController < ApplicationController
 	end
 	
 	def edit
-	  @it = It.find(params[:id])
+	  @new_it = It.find(params[:id])
+	  @it = It.where(:is_default => true).first
 	end
 	
 	def update
-	  @it = It.find(params[:id])
+	  @new_it = It.find(params[:id])
 	  
 	  respond_to do |format|
-      if @it.update_attributes(params[:it])
-        if @it.is_default
+      if @new_it.update_attributes(params[:it])
+        if @new_it.is_default
           @its = It.find(:all)
           @its.each do |t|
-            if t.id != @it.id
+            if t.id != @new_it.id
               t.is_default = false
               t.save
             end
@@ -85,7 +86,7 @@ class ItsController < ApplicationController
         format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @it.errors, status: :unprocessable_entity }
+        format.json { render json: @new_it.errors, status: :unprocessable_entity }
       end
     end
 	  

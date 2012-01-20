@@ -1,9 +1,9 @@
-<%= form_for(@it) do |f|%>
-  <% if @it.errors.any? %>
+<%= form_for(@new_it) do |f|%>
+  <% if @new_it.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@it.errors.count, "error") %> sh!z blocked, Fix the following YO!:</h2>
+      <h2><%= pluralize(@new_it.errors.count, "error") %> sh!z blocked, Fix the following YO!:</h2>
       <ul>
-      <% @it.errors.full_messages.each do |msg| %>
+      <% @new_it.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
