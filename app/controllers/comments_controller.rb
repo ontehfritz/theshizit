@@ -42,19 +42,19 @@ class CommentsController < ApplicationController
   # GET /comments/new
   # GET /comments/new.json
   def new
-	it = It.find(params[:it_id])
-	if it.is_default
-		@comment = Comment.new
-		@it = it
-		@category = Category.find(params[:category_id])
-		@content = Content.find(params[:content_id])
-		@comment.content_id = params[:content_id]
-		
-		respond_to do |format|
-		  format.html { render :layout => "dialog" }# new.html.erb
-		  format.json { render json: @comment }
-		end
-	end
+  	it = It.find(params[:it_id])
+  	if !it.locked
+  		@comment = Comment.new
+  		@it = it
+  		@category = Category.find(params[:category_id])
+  		@content = Content.find(params[:content_id])
+  		@comment.content_id = params[:content_id]
+  		
+  		respond_to do |format|
+  		  format.html { render :layout => "dialog" }# new.html.erb
+  		  format.json { render json: @comment }
+  		end
+  	end
   end
 
   # GET /comments/1/edit
@@ -66,11 +66,15 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     it = It.find(params[:it_id])
-  	if it.is_default
+  	if !it.locked
   		@comment = Comment.new(params[:comment])
   		@comment.theshiz = sanitize(@comment.theshiz)
   		@comment.user_id = current_user.id
-  
+  		
+  		@it = it
+      @category =  @comment.content.category
+      @content =  @comment.content
+      
   		respond_to do |format|
   		  if @comment.save
   		    Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
@@ -87,7 +91,7 @@ class CommentsController < ApplicationController
   			  format.html { render action: "close", :layout => "dialog"}
   			  format.json { render json: @comment, status: :created, location: @comment }
   		  else
-  			  format.html { render action: "new" }
+  			  format.html { render action: "new", :layout => "dialog"}
   			  format.json { render json: @comment.errors, status: :unprocessable_entity }
   		  end
   		end

@@ -1,4 +1,7 @@
+<% if (can? :create, It.new) %>
 <%= link_to "new", new_it_path %>
+<hr style="border: 1px dashed #000;"/>
+<% end %>
 <% @its.each do |it| %>
 <div>
 	<div>
@@ -7,8 +10,10 @@
 	<% else %>
 		<span><%= link_to it.name,  it %></span>
 	<% end %>
-	<%= link_to "Edit", edit_it_path(it)%>
+	<% if (can? :create, it) %>
+		|| <%= link_to "Edit", edit_it_path(it)%>
+	<%end%>
 	</div>
-	<div><%= it.created_at %></div>
+	<div><%= it.created_at.to_date %></div>
 <div>
 <% end %>

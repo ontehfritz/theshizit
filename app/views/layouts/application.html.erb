@@ -74,7 +74,10 @@ body{
 <![endif]-->
 </head>
 <body>
-<div> <a href="/" style="font-size: 30px;"><%=t :page_header_title %></a><%= yield :shiz_cat %><%= yield :shiz %>
+<div> 
+	
+<a href="/its/<%= @it.to_param %>" style="font-size: 30px;">
+<%=t :page_header_title %></a><%= yield :shiz_cat %><%= yield :shiz %>
 <% if current_user != nil %><span style="float:right"><%= link_to('X', destroy_user_session_path, :method => :delete) %></span><% else %><span style="float:right"><%= link_to('Go in!', new_user_session_path) %></span><%end %></div>
 <hr style="border: 1px dashed #000;" />
 <% if !notice.nil? || !alert.nil? %>

@@ -11,7 +11,7 @@ $(document).ready(function() {
 		$("#divId").dialog({
 			autoOpen : false,
 			modal : true,
-			height : 600,
+			height : 300,
 			width : 500,
 			close : function(event, ui) {
 				location.reload(true);
@@ -43,7 +43,7 @@ $(document).ready(function() {
 <% end %>
 <div id="content_shiz">
 <% if @content.class.name == "Code" %>
-<%= CodeRay.scan(@content.theshiz, @content.file_type).div(:line_numbers => :table).html_safe %>
+<%= CodeRay.scan(@content.theshiz, @content.file_type).div().html_safe %>
 <% elsif @content.class.name == "Link" %>
 <% if @content.is_youtube == true %>
 <iframe width="560" height="315" src="http://www.youtube.com/embed/<%= @content.youtube_id %>?rel=0" frameborder="0" allowfullscreen></iframe>
@@ -68,9 +68,10 @@ $(document).ready(function() {
 Comments(<%= @content.comments.count.to_s %>)
 </div>
 </div>
-<% if @content.category.it.is_default %>
+<% if !@content.category.it.locked %>
 	<input type="button" id="add" value="Add" onclick="return showAddDialog()">
 <% end %>
+<hr style="border: 1px dashed #000;" />
 <% @content.comments.each do |comment|  %>
 	<%= render :partial => "comments/comment", :locals=>{:comment=> comment, :notifications => @notifications} %> 
 	<% if current_user != nil %>

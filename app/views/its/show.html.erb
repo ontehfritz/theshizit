@@ -24,7 +24,7 @@ $(document).ready(function() {
 <br />
 <span><%= @it.description %></span>
 <br />
-<% if @it.is_default %>
+<% if !@it.locked %>
 <input type="button" id="add" value="<%=t :add_category_button %>" onclick="return showAddDialog()">
 <% end %>
 <div id="category" style="width:70%;">

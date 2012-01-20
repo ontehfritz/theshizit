@@ -10,7 +10,7 @@ en:
   add_category_button: "Add"
   add_category_title: "Add some shiz"
   create_category_button: "Create Category"
-  archive_link: "Archive"
+  archive_link: "More Shiz"
   
   activerecord:
     errors:

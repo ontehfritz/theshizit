@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-include ActionView::Helpers::SanitizeHelper
+  include ActionView::Helpers::SanitizeHelper
   before_filter :authenticate_user!, :except => [:show, :pic]
   load_and_authorize_resource :only => [:delete, :update, :edit]
   # GET /contents
@@ -49,7 +49,7 @@ include ActionView::Helpers::SanitizeHelper
   # GET /contents/new.json
   def new
     it = It.find(params[:it_id])
-	  if it.is_default
+	  if !it.locked
   		@content = Content.new
   		@content.category = Category.find(params[:category_id])
   		@content.category.it = it;
@@ -71,7 +71,7 @@ include ActionView::Helpers::SanitizeHelper
   # POST /contents.json
   def create
     it = It.find(params[:it_id])
-	  if it.is_default
+	  if !it.locked
 		  @content = params[:content][:type].constantize.new(params[:content])
 		  @content.title = strip_tags(@content.title)
 		  @content.theshiz = sanitize(@content.theshiz)

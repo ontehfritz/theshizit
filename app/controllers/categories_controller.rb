@@ -34,7 +34,7 @@ class CategoriesController < ApplicationController
        @notifications = Notification.find(:all,:conditions => ["type_id in (?) and user_id = ?", content_ids, current_user.id])
     end
     
-	  @it = It.where(:is_default => true).first
+	  @it = @category.it
 	
     respond_to do |format|
       format.html # show.html.erb
@@ -45,17 +45,16 @@ class CategoriesController < ApplicationController
   # GET /categories/new
   # GET /categories/new.json
   def new
-	it = It.find(params[:it_id])
-	if it.is_default
-		@category = Category.new
-		@category.it = It.where(:is_default => true).first
-		
-
-		respond_to do |format|
-		  format.html  {render :layout => "dialog"}# new.html.erb
-		  format.json { render json: @category }
-		end
-	end
+  	it = It.find(params[:it_id])
+  	if !it.locked
+  		@category = Category.new
+  		@category.it = it
+  		
+  		respond_to do |format|
+  		  format.html  {render :layout => "dialog"}# new.html.erb
+  		  format.json { render json: @category }
+  		end
+  	end
   end
 
   # GET /categories/1/edit
@@ -66,26 +65,26 @@ class CategoriesController < ApplicationController
   # POST /categories
   # POST /categories.json
   def create
-	it = It.find(params[:it_id])
-	if it.is_default
-		@category = Category.new(params[:category])
-		@category.it = It.where(:is_default => true).first
-		@category.user_id = current_user.id
-		
-		Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                  @category.class.name, @category.id)
-		
-		respond_to do |format|
-  		if @category.save
-  			flash[:notice] = 'Category was successfully created.'
-  			format.html { render action: "close",:layout => "dialog" }
-  			format.json { render json: @category, status: :created, location: @category }
-  		else
-  			format.html { render action: "new", layout: "dialog" }
-  			format.json { render json: @category.errors, status: :unprocessable_entity }
-  		end
-  	end
-	 end
+  	it = It.find(params[:it_id])
+  	if !it.locked
+  		@category = Category.new(params[:category])
+  		@category.it = it
+  		@category.user_id = current_user.id
+  		
+  		Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
+                    @category.class.name, @category.id)
+  		
+  		respond_to do |format|
+    		if @category.save
+    			flash[:notice] = 'Category was successfully created.'
+    			format.html { render action: "close",:layout => "dialog" }
+    			format.json { render json: @category, status: :created, location: @category }
+    		else
+    			format.html { render action: "new", layout: "dialog" }
+    			format.json { render json: @category.errors, status: :unprocessable_entity }
+    		end
+    	end
+  	 end
   end
 
   # PUT /categories/1
