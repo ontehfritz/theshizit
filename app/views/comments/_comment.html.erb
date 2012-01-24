@@ -21,9 +21,13 @@
 	<% yours = "background-color: #CCFFCC;" %>
 <% end %>
 <% if current_user != nil && current_user.id == comment.user_id %>
-<p class="comments" style="<%= yours %>">"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"</p>
+<p class="comments" style="<%= yours %>">
+"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"
+</p>
 <% else %>
-<p class="comments" style="<%= yours %>">"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"</p>
+<p class="comments" style="<%= yours %>">
+"<%= comment.theshiz.gsub("\n", "<br />").html_safe %>"
+</p>
 <% end %>
 </div>
 <div id="comment_goodies">

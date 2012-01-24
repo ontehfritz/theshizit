@@ -17,7 +17,7 @@
 			return false;
 		}
 		function showWhat(){
-			$("#what").dialog({ title: 'Here it is ...' });
+			$("#what").dialog({ title: 'Here it is ... SHIZ ON IT!!!' });
 			$("#what").dialog("open");
 			return false;
 		}
@@ -36,20 +36,20 @@
 			$("#about").dialog({
 				   autoOpen: false,
 				   modal: true,
-				   height: 300,
-				   width: 600,
+				   height: 150,
+				   width: 550,
 			});
 			$("#rules").dialog({
 				   autoOpen: false,
 				   modal: true,
-				   height: 500,
+				   height: 400,
 				   width: 800,
 			});
 			$("#what").dialog({
 				   autoOpen: false,
 				   modal: true,
-				   height: 500,
-				   width: 800,
+				   height: 350,
+				   width: 600,
 			});
 			$("#help").dialog({
 				   autoOpen: false,
@@ -76,9 +76,9 @@ body{
 <body>
 <div> 
 	
-<a href="/its/<%= @it.to_param %>" style="font-size: 30px;">
+<a href="/its/<%= @it.to_param %>" style="font-size: 30px;" title="<%=t :title %>">
 <%=t :page_header_title %></a><%= yield :shiz_cat %><%= yield :shiz %>
-<% if current_user != nil %><span style="float:right"><%= link_to('X', destroy_user_session_path, :method => :delete) %></span><% else %><span style="float:right"><%= link_to('Go in!', new_user_session_path) %></span><%end %></div>
+<% if current_user != nil %><span style="float:right"><%= link_to('X', destroy_user_session_path, :method => :delete, :title => "logout") %></span><% else %><span style="float:right"><%= link_to('Go in!', new_user_session_path) %></span><%end %></div>
 <hr style="border: 1px dashed #000;" />
 <% if !notice.nil? || !alert.nil? %>
 <script>
@@ -128,21 +128,19 @@ $(function() {
 	<br />
 	<span style="color:green;">A shiz period begins at the beginning of each month and ends the last day of the month.<br />
 	This means all previous periods are archived and you can no longer post or interact 
-	with periods that have past, However you will still be able to read shiz from past periods. Please check the archive section. 
+	with periods that have past, However you will still be able to read shiz from past periods. 
 	</li>
 	<li>
-		<span style="color:green;">On each new period the slate is cleaned and ready for action, this gives a chance for new evolving content each period.</span>  
+	<u>What do green categories, content, and comments mean?</u><br />
+	<span style="color:green;">Shiz highlighted with light green was created by you!! Dark green is notification of activity
+		on anything you participated in.</span>
 	</li>
 	<li>
-	<b>What do green categories, content, and comments mean?</b><br />
-	<span style="color:green;">Shiz highlighted with green was created by you!!</span>
-	</li>
-	<li>
-	<b>Why are there no names or dates on anything?</b><br />
+	<u>WTF, no names or dates on anything?</u><br />
 	<span style="color:green;">This is an anonymous web board. No identity informaton will be shared.</span>
 	</li>
 	<li>
-	<b>Why are some categories larger than others?</b>
+	<u>Why are some categories larger than others?</u><br />
 	<span style="color:green;">As content grows inside a category so does its popularity as well as the font size. This is to emphasize which categories are the top shiz!</span>
 	</li>
 </ul>
