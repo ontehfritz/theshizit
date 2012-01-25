@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  load_and_authorize_resource :only => [:delete, :update, :edit]
+  load_and_authorize_resource :only => [:delete, :update]
   # GET /categories
   # GET /categories.json
   def index
@@ -58,9 +58,9 @@ class CategoriesController < ApplicationController
   end
 
   # GET /categories/1/edit
-  def edit
-    @category = Category.find(params[:id])
-  end
+  # def edit
+    # @category = Category.find(params[:id])
+  # end
 
   # POST /categories
   # POST /categories.json
@@ -89,32 +89,34 @@ class CategoriesController < ApplicationController
 
   # PUT /categories/1
   # PUT /categories/1.json
-  def update
-    @category = Category.find(params[:id])
-
-    respond_to do |format|
-      if @category.update_attributes(params[:category])
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @category.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+    # @category = Category.find(params[:id])
+# 
+    # respond_to do |format|
+      # if @category.update_attributes(params[:category])
+        # format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        # format.json { head :ok }
+      # else
+        # format.html { render action: "edit" }
+        # format.json { render json: @category.errors, status: :unprocessable_entity }
+      # end
+    # end
+  # end
 
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
     @category = Category.find(params[:id])
-	  @category.in_recycling = true
-    #@category.destroy
-
-	  if @category.save
-		  respond_to do |format|
-		    format.html { redirect_to "/" }
-		    format.json { head :ok }
-		  end
+    if (can? :delete, @category)
+  	  @category.in_recycling = true
+      #@category.destroy
+  
+  	  if @category.save
+  		  respond_to do |format|
+  		    format.html { redirect_to "/" }
+  		    format.json { head :ok }
+  		  end
+  	  end
 	  end
   end
 end

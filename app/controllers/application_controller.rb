@@ -10,10 +10,10 @@ class ApplicationController < ActionController::Base
   
   def layout_by_resource
     if devise_controller?
-		"dialog"
-	else
-		"application"
-	end
+		  "dialog"
+	  else
+		  "application"
+	  end
   end
   
   

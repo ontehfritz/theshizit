@@ -5,14 +5,14 @@
 <%= link_to "X", it_category_content_comment_path(comment.content.category.it, 
 	comment.content.category, comment.content, comment), :confirm => 'Are you sure?', :method => :delete %>
 <% end %>
-<% if comment.user_id != (current_user == nil ? 0 : current_user.id) && comment.content.category.it.is_default%>
-<% if current_user != nil && VoteLog.has_user_voted(current_user, comment) %>
-		<%= link_to '(U)', {:controller => "comments", :action => 'vote', :it_id => comment.content.category.it_id, 
-			:category_id => comment.content.category.id, :content_id => comment.content.id,:comment_id => comment.id}, :method => :post, :class => :pow, :title => "UN-POW"   %>
-<% else %>
-		<%= link_to '(P)', {:controller => "comments", :action => 'vote', :it_id => comment.content.category.it_id, 
-			:category_id => comment.content.category.id, :content_id => comment.content.id,:comment_id => comment.id}, :method => :post, :class => :pow, :title => "POW"  %>
-<% end %>
+<% if comment.user_id != (current_user == nil ? 0 : current_user.id) && !comment.content.category.it.locked%>
+	<% if current_user != nil && VoteLog.has_user_voted(current_user, comment) %>
+			<%= link_to '(U)', {:controller => "comments", :action => 'vote', :it_id => comment.content.category.it_id, 
+				:category_id => comment.content.category.id, :content_id => comment.content.id,:comment_id => comment.id}, :method => :post, :class => :pow, :title => "UN-POW"   %>
+	<% else %>
+			<%= link_to '(P)', {:controller => "comments", :action => 'vote', :it_id => comment.content.category.it_id, 
+				:category_id => comment.content.category.id, :content_id => comment.content.id,:comment_id => comment.id}, :method => :post, :class => :pow, :title => "POW"  %>
+	<% end %>
 <% end %>
 <% yours = "" %>
 <% if notifications != nil && notifications.to_ary.find{ |n| n.type_id == comment.id && n.type_name == comment.class.name } != nil%>

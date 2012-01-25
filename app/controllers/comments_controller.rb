@@ -10,11 +10,13 @@ class CommentsController < ApplicationController
     if VoteLog.has_user_voted(current_user, @comment)
       @comment.vote.nil? ? @comment.vote = 0 : @comment.vote -= 1
       VoteLog.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @comment.id, @comment.class.name])
+      @comment.save
     else
       @comment.vote.nil? ? @comment.vote = 1 : @comment.vote += 1
       VoteLog.create(:user_id => current_user.id, :type_name => @comment.class.name, :type_id => @comment.id) 
+      @comment.save
     end
-    @comment.save
+    
     redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content)
   end
   
@@ -58,9 +60,9 @@ class CommentsController < ApplicationController
   end
 
   # GET /comments/1/edit
-  def edit
-    @comment = Comment.find(params[:id])
-  end
+  #def edit
+  #  @comment = Comment.find(params[:id])
+  #end
 
   # POST /comments
   # POST /comments.json
@@ -99,20 +101,20 @@ class CommentsController < ApplicationController
   end
   # PUT /comments/1
   # PUT /comments/1.json
-  def update
-    @comment = Comment.find(params[:id])
-
-    respond_to do |format|
-      if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
+  # def update
+    # @comment = Comment.find(params[:id])
+# 
+    # respond_to do |format|
+      # if @comment.update_attributes(params[:comment])
+        # format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        # format.json { head :ok }
+      # else
+        # format.html { render action: "edit" }
+        # format.json { render json: @comment.errors, status: :unprocessable_entity }
+      # end
+    # end
+  # end
+  
   # DELETE /comments/1
   # DELETE /comments/1.json
   def destroy

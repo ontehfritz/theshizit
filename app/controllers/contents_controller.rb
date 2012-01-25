@@ -1,7 +1,7 @@
 class ContentsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   before_filter :authenticate_user!, :except => [:show, :pic]
-  load_and_authorize_resource :only => [:delete, :update, :edit]
+  load_and_authorize_resource :only => [:delete, :update,:create]
   # GET /contents
   # GET /contents.json
   def vote
@@ -63,9 +63,9 @@ class ContentsController < ApplicationController
   end
 
   # GET /contents/1/edit
-  def edit
-    @content = Content.find(params[:id])
-  end
+  # def edit
+    # @content = Content.find(params[:id])
+  # end
 
   # POST /contents
   # POST /contents.json
@@ -100,19 +100,19 @@ class ContentsController < ApplicationController
 
   # PUT /contents/1
   # PUT /contents/1.json
-  def update
-    @content = Content.find(params[:id])
-
-    respond_to do |format|
-      if @content.update_attributes(params[:content])
-        format.html { redirect_to @content, notice: 'Content was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @content.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+  # def update
+    # @content = Content.find(params[:id])
+# 
+    # respond_to do |format|
+      # if @content.update_attributes(params[:content])
+        # format.html { redirect_to @content, notice: 'Content was successfully updated.' }
+        # format.json { head :ok }
+      # else
+        # format.html { render action: "edit" }
+        # format.json { render json: @content.errors, status: :unprocessable_entity }
+      # end
+    # end
+  # end
 
   # DELETE /contents/1
   # DELETE /contents/1.json

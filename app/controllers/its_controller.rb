@@ -63,33 +63,33 @@ class ItsController < ApplicationController
 	end
 	
 	def edit
-	  @new_it = It.find(params[:id])
-	  @it = It.where(:is_default => true).first
+	   @new_it = It.find(params[:id])
+	   @it = It.where(:is_default => true).first
 	end
 	
 	def update
 	  @new_it = It.find(params[:id])
-	  
-	  respond_to do |format|
-      if @new_it.update_attributes(params[:it])
-        if @new_it.is_default
-          @its = It.find(:all)
-          @its.each do |t|
-            if t.id != @new_it.id
-              t.is_default = false
-              t.save
+	  if (can? :update, @new_it)
+  	  respond_to do |format|
+        if @new_it.update_attributes(params[:it])
+          if @new_it.is_default
+            @its = It.find(:all)
+            @its.each do |t|
+              if t.id != @new_it.id
+                t.is_default = false
+                t.save
+              end
             end
           end
+          
+          format.html { redirect_to its_path, notice: 'It was successfully updated.' }
+          format.json { head :ok }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @new_it.errors, status: :unprocessable_entity }
         end
-        
-        format.html { redirect_to its_path, notice: 'It was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @new_it.errors, status: :unprocessable_entity }
       end
-    end
-	  
+	  end
 	end
 
 	
