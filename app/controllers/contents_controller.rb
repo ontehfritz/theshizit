@@ -1,7 +1,7 @@
 class ContentsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   before_filter :authenticate_user!, :except => [:show, :pic]
-  load_and_authorize_resource :only => [:delete, :update,:create]
+  load_and_authorize_resource :only => [:delete, :update]
   # GET /contents
   # GET /contents.json
   def vote

@@ -15,9 +15,10 @@ ActiveRecord::Schema.define(:version => 20120115191500) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
-    t.integer  "contents_count", :default => 0
+    t.integer  "contents_count",        :default => 0
+    t.integer  "active_contents_count", :default => 0
     t.boolean  "is_nsfw"
-    t.boolean  "in_recycling",   :default => false
+    t.boolean  "in_recycling",          :default => false
     t.integer  "it_id"
     t.integer  "user_id"
     t.datetime "created_at"
@@ -46,11 +47,12 @@ ActiveRecord::Schema.define(:version => 20120115191500) do
     t.text     "theshiz"
     t.string   "file_type"
     t.string   "file_name"
-    t.binary   "image_data",     :limit => 16777215
+    t.binary   "image_data",            :limit => 16777215
     t.string   "type"
-    t.integer  "vote",                               :default => 0
-    t.integer  "comments_count",                     :default => 0
-    t.boolean  "in_recycling",                       :default => false
+    t.integer  "vote",                                      :default => 0
+    t.integer  "comments_count",                            :default => 0
+    t.integer  "active_comments_count",                     :default => 0
+    t.boolean  "in_recycling",                              :default => false
     t.integer  "category_id"
     t.integer  "user_id"
     t.datetime "created_at"

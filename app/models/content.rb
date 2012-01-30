@@ -2,6 +2,8 @@ class Content < ActiveRecord::Base
   default_scope :conditions => ["contents.in_recycling = ?", false]
 	has_many :comments
 	belongs_to :category, :counter_cache => true
+	after_save :update_counter_cache
+	after_destroy :update_counter_cache
 	self.per_page = 10
 	
 	def self.inherited(child)
@@ -26,4 +28,10 @@ class Content < ActiveRecord::Base
 	def to_param
 		"#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
 	end
+	
+
+  def update_counter_cache
+    self.category.active_contents_count = Content.count( :conditions => ["in_recycling = 0 AND category_id = ?", self.category.id])
+    self.category.save
+  end
 end
