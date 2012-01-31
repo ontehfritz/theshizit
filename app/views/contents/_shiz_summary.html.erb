@@ -31,7 +31,7 @@
 	<% if content.class.name == "Pic" %>
 	<div>
 		<% if content.image_data != nil %>
-			<%= image_tag("/it/#{content.category.it_id}/categories/#{content.category.id}/contents/#{content.id}/pic", :alt => "Pic", :border => 1, :size => "100x100") %>
+			<%= image_tag(pic_it_category_content_url(content.category.it, content.category,content), :alt => "Pic", :border => 1, :size => "100x100") %>
 		<% else %>
 			<%= image_tag(content.file_name, :alt => "Pic", :border => 1, :size => "100x100") %>
 		<% end%>
@@ -73,6 +73,8 @@
 ?
 <% when "Code" %>
 {01}
+<% when "Link" %>
+URL
 <% end %>
 <% if content.user_id != (current_user == nil ? 0 : current_user.id) && content.category.it.is_default %>
 <% if current_user != nil && VoteLog.has_user_voted(current_user, content) %>
