@@ -62,7 +62,7 @@ Shizit::Application.configure do
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
-    :domain               => 'guitaritis.com',
+    :domain               => 'theshizit.com',
     :user_name            => '',
     :password             => '',
     :authentication       => 'plain',

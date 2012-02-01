@@ -6,6 +6,7 @@ gem 'rake', '0.9.2.2'
 gem 'exception_notification'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'daemons'
 gem 'coderay'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
