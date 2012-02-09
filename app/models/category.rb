@@ -10,12 +10,10 @@ class Category < ActiveRecord::Base
 	end
 	
 	def get_total_points
-	  total = 0
+	  total = self.contents.count
+	  
 	  self.contents.each do |content|
-	    total += (content.vote == nil ? 0 : content.vote)
-	    content.comments.each do |comment|
-	      total += (comment.vote == nil ? 0 : comment.vote)
-	    end
+	    total += content.comments.count / 4
 	  end
 	  
 	  total

@@ -74,12 +74,11 @@ body{
 <![endif]-->
 </head>
 <body>
-<div> 
-	
-<a href="/its/<%= @it.to_param %>" style="font-size: 30px;" title="<%=t :title %>">
-<%=t :page_header_title %></a><%= yield :shiz_cat %><%= yield :shiz %>
-<% if current_user != nil %><span style="float:right"><%= link_to('X', destroy_user_session_path, :method => :delete, :title => "logout") %></span><% else %><span style="float:right"><%= link_to('Go in!', new_user_session_path) %></span><%end %></div>
-<hr style="border: 1px dashed #000;" />
+
+<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 30px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a></div>
+<div style="width:70%;text-align: center;margin:0 auto;"><%= yield :shiz_cat %><%= yield :shiz %></div>
+
+<div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
 <% if !notice.nil? || !alert.nil? %>
 <script>
 $(function() {
@@ -95,10 +94,10 @@ $(function() {
 </div>
 <%= yield %>
 
-<hr style="border: 1px dashed #000;" />
+<div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
 <div id="footer" style="width:%100;text-align: center;background-color: #F0F0F0;">
 <a href="" onclick="return showWhat();" class="smalllink">What is this?</a> | <a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
-|  <%= link_to('You', "/you/" + @it.to_param, :class => "smalllink") %>
+|  <%= link_to('Moderators', "/you/" + @it.to_param, :class => "smalllink") %>
 </div>
 <div id="rules" style="display: none;">
 <ol>
@@ -131,15 +130,6 @@ $(function() {
 	with periods that have past, However you will still be able to read shiz from past periods. 
 	</li>
 	<li>
-	<u>What do green categories, content, and comments mean?</u><br />
-	<span style="color:green;">Shiz highlighted with light green was created by you!! Dark green is notification of activity
-		on anything you participated in.</span>
-	</li>
-	<li>
-	<u>WTF, no names or dates on anything?</u><br />
-	<span style="color:green;">This is an anonymous web board. No identity informaton will be shared.</span>
-	</li>
-	<li>
 	<u>Why are some categories larger than others?</u><br />
 	<span style="color:green;">As content grows inside a category so does its popularity as well as the font size. This is to emphasize which categories are the top shiz!</span>
 	</li>
@@ -156,8 +146,7 @@ $(function() {
 </ul>
 </div>
 <div id="about" style="display: none;">
-	<p>TheShizit Board v0.1</p>
-	<p><a href="https://github.com/ontehfritz">Git Hub</a></p>
+	<p>TheShizit Board v0.2</p>
 </div>
 </body>
 </html>

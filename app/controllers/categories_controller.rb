@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  #before_filter :authenticate_user!, :except => [:show, :create]
   load_and_authorize_resource :only => [:delete, :update]
   # GET /categories
   # GET /categories.json
@@ -18,9 +18,6 @@ class CategoriesController < ApplicationController
     @sort = params[:sort].nil? ? "pop" : params[:sort]
     @category = Category.find(params[:id])
     
-    if current_user != nil
-      Notification.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @category.id, @category.class.name])
-    end
     page = params[:page].nil? ? 1 : params[:page]
 	  if @sort == "recent"
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
@@ -28,11 +25,6 @@ class CategoriesController < ApplicationController
 		  #@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('vote DESC')
 	  end
-	 
-	  if(current_user != nil)
-	     content_ids = @contents.map {|c| c.id}
-       @notifications = Notification.find(:all,:conditions => ["type_id in (?) and user_id = ?", content_ids, current_user.id])
-    end
     
 	  @it = @category.it
 	
@@ -69,10 +61,8 @@ class CategoriesController < ApplicationController
   	if !it.locked
   		@category = Category.new(params[:category])
   		@category.it = it
-  		@category.user_id = current_user.id
+  		@category.user_id = 0
   		
-  		Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                    @category.class.name, @category.id)
   		
   		respond_to do |format|
     		if @category.save

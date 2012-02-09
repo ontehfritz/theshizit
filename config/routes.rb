@@ -4,17 +4,13 @@ Shizit::Application.routes.draw do
  resources :its do
 	 member do
 		get 'list'
-		get 'you'
 	 end
 	resources :categories do
 		resources :contents do
 			member do
 				get  'pic'
-				post 'vote'
 			end
-			resources :comments do
-			  post 'vote'
-			end
+			resources :comments 
 		end
 	end
  end

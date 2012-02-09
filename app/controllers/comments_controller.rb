@@ -1,26 +1,10 @@
 class CommentsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
-  before_filter :authenticate_user!, :except => [:show]
+  #before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource :only => [:delete, :update, :edit]
   # GET /comments
   # GET /comments.json
-  
-  def vote
-    @comment = Comment.find(params[:comment_id])
-    if VoteLog.has_user_voted(current_user, @comment)
-      @comment.vote.nil? ? @comment.vote = 0 : @comment.vote -= 1
-      VoteLog.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, @comment.id, @comment.class.name])
-      @comment.save
-    else
-      @comment.vote.nil? ? @comment.vote = 1 : @comment.vote += 1
-      VoteLog.create(:user_id => current_user.id, :type_name => @comment.class.name, :type_id => @comment.id) 
-      @comment.save
-    end
-    
-    redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content)
-  end
-  
-  
+   
   def index
     @comments = Comment.all
 
@@ -71,23 +55,13 @@ class CommentsController < ApplicationController
   	if !it.locked
   		@comment = Comment.new(params[:comment])
   		@comment.theshiz = sanitize(@comment.theshiz)
-  		@comment.user_id = current_user.id
-  		
+  		@comment.user_id = 0
   		@it = it
       @category =  @comment.content.category
       @content =  @comment.content
       
   		respond_to do |format|
   		  if @comment.save
-  		    Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-  		                                              @comment.content.category.class.name, @comment.content.category)
-          Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                                                    @comment.content.class.name,  @comment.content.id)
-          Subscription.find_or_create_by_user_id_and_type_name_and_type_id(current_user.id, 
-                                                    @comment.content.category.class.name, @comment.content.category.id)
-          Subscription.delay.notify(@comment, current_user)
-          Subscription.delay.notify(@comment.content, current_user)
-          Subscription.delay.notify(@comment.content.category, current_user)
   			  flash[:notice] = 'Comment was successfully created.'
   			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
   			  format.html { render action: "close", :layout => "dialog"}
@@ -121,7 +95,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   	@comment.in_recycling = true
       #@comment.destroy
-    if (can? :delete, @comment) || (current_user.id == @comment.user_id)
+    if (can? :delete, @comment)
     	if @comment.save
     		respond_to do |format|
     		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }

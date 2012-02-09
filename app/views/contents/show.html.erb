@@ -20,17 +20,18 @@ $(document).ready(function() {
 });
 </script>
 <% content_for :shiz_cat do %>
-   :<%= link_to @content.category.theshiz, it_category_url(@content.category.it, @content.category)  %>
+   /<%= link_to @content.category.theshiz, it_category_url(@content.category.it, @content.category)  %>
 <% end %>
 <% content_for :shiz_cat do %>
-	:<%= @content.title %>
+	/<%= @content.title %>
 <% end %>
 <div id="content_item">
-<% if (can? :delete, @content) || (current_user != nil && current_user.id == @content.user_id) %>
-<%= link_to "X", [@content.category.it, @content.category, @content], :confirm => 'Are you sure?', :method => :delete %>
+<% if (can? :delete, @content) %>
+	<%= link_to "X", [@content.category.it, @content.category, @content], :confirm => 'Are you sure?', :method => :delete %>
 <% end %>
 <div id="content_title">
 <h3><%= @content.title %></h3>
+<%= time_ago_in_words(@content.created_at, true) %> Ago
 </div>
 <% if @content.class.name == "Pic" %>
 	<div>
@@ -41,7 +42,7 @@ $(document).ready(function() {
 		<% end%>
 	</div>
 <% end %>
-<div id="content_shiz">
+<div id="content_shiz" style="border: 1px solid black;padding:10px;background-color:#F8F8F8;">
 <% if @content.class.name == "Code" %>
 <%= CodeRay.scan(@content.theshiz, @content.file_type).div().html_safe %>
 <% elsif @content.class.name == "Link" %>
@@ -54,31 +55,20 @@ $(document).ready(function() {
 <%= @content.theshiz.gsub("\n", "<br />").html_safe %>
 <% end %>
 </div>
-<% if @content.user_id != (current_user == nil ? 0 : current_user.id) && !@content.category.it.locked %>
-	<% if current_user != nil && VoteLog.has_user_voted(current_user, @content) %>
-	<%= link_to '(U)', {:controller => "contents", :action => 'vote', :it_id => @content.category.it_id, 
-				:category_id => @content.category.id, :id => @content.id}, :class  => :pow, :method => :post, :title => "UN-POW"  %>
-	<% else %>
-	<%= link_to '(P)', {:controller => "contents", :action => 'vote', :it_id => @content.category.it_id, 
-				:category_id => @content.category.id, :id => @content.id}, :class  => :pow, :method => :post, :title => "POW"   %>
-	<% end %>
-<% end%>
 <br />
 <div id="content_goodies">
 Comments(<%= @content.comments.count.to_s %>)
 </div>
+<hr />
 </div>
 <% if !@content.category.it.locked %>
-	<input type="button" id="add" value="Add" onclick="return showAddDialog()">
+	<a href onclick="return showAddDialog();" class="smalllink">Add Comment</a>
 <% end %>
-<hr style="border: 1px dashed #000;" />
+<div style="border:1px dotted black;padding:10px;">
 <% @content.comments.each do |comment|  %>
 	<%= render :partial => "comments/comment", :locals=>{:comment=> comment, :notifications => @notifications} %> 
-	<% if current_user != nil %>
-	<% Notification.delete_all(["user_id = ? and type_id = ? and type_name = ?", current_user.id, comment.id, comment.class.name]) %>
-	<% end %>
 <% end %>
-
+</div>
 <div id="divId" title="Modal Window">
     <iframe id="modalIframeId" width="100%" height="100%"
     marginWidth="0" marginHeight="0" frameBorder="0" scrolling="no"

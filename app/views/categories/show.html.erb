@@ -58,22 +58,23 @@ $(document).ready(function() {
 
 </script>
 <% content_for :shiz_cat do %>
-   :<%= @category.theshiz %>
+   /<%= @category.theshiz %>
 <% end %>
-<h3><%= @category.theshiz %></h3>
-<div id="content" style="float:left;border: 0px dotted black;width:80%;">
+<div style="width:70%;margin:0 auto;">
+<div id="content" style="float:left;width:100%;">
 <% if !@category.it.locked %>
-<%= link_to "add", new_it_category_content_url(@it, @category) %>
+<%= link_to "add", new_it_category_content_url(@it, @category), :class => "smalllink" %>
 <% end %>
 <% if @sort == "recent" %>
-<span style="float:right;"> || View By: <%= link_to "Popularity", it_category_url(@it, @category) +  "?sort=pop" %></span>
+<span style="float:right;"> || View By: <%= link_to "Popularity", it_category_url(@it, @category) +  "?sort=pop" , :class => "smalllink"%></span>
 <% else %>
-<span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" %></span>
+<span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" , :class => "smalllink"%></span>
 <% end %>
-<a href="#" style="float:right;padding-right:5px;" name="expand">+</a><br />
+<a href="#" style="float:right;padding-right:5px;" name="expand" class="smalllink">+</a><br />
 <% @contents.each do |content|  %>
 	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :notifications => @notifications} %> 
 <% end %>
 </div>
 <div style="clear:both;"></div>
 <%= will_paginate @contents %>
+</div>
