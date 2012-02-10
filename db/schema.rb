@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115191500) do
+ActiveRecord::Schema.define(:version => 20120210010252) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20120115191500) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "comments", :force => true do |t|
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20120115191500) do
     t.integer  "tone_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "content_types", :force => true do |t|
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20120115191500) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "delayed_jobs", :force => true do |t|

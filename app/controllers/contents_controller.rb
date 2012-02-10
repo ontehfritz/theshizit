@@ -57,6 +57,7 @@ class ContentsController < ApplicationController
 		  @content.title = strip_tags(@content.title)
 		  @content.theshiz = sanitize(@content.theshiz)
 		  @content.user_id = 0
+		  @content.ip = request.remote_ip;
 		  @it = @content.category.it
 
 		  respond_to do |format|

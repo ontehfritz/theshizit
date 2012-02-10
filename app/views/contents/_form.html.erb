@@ -33,6 +33,12 @@
 	  <%= f.text_area :theshiz %>
   </div>
 
+  <br />
+  Turing Test:
+  <%= f.label :humanizer_answer, @content.humanizer_question %><br />
+  <%= f.text_field :humanizer_answer %>
+  <%= f.hidden_field :humanizer_question_id %>
+  
   <div class="actions">
     <%= f.submit "ShizIt", :id => "post" %>
   </div>

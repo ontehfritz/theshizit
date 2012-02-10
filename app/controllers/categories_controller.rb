@@ -23,7 +23,7 @@ class CategoriesController < ApplicationController
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
 	  else
 		  #@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
-		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('vote DESC')
+		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('active_comments_count DESC')
 	  end
     
 	  @it = @category.it
@@ -62,6 +62,7 @@ class CategoriesController < ApplicationController
   		@category = Category.new(params[:category])
   		@category.it = it
   		@category.user_id = 0
+  		@category.ip = request.remote_ip;
   		
   		
   		respond_to do |format|

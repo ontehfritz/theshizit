@@ -56,6 +56,7 @@ class CommentsController < ApplicationController
   		@comment = Comment.new(params[:comment])
   		@comment.theshiz = sanitize(@comment.theshiz)
   		@comment.user_id = 0
+  		@comment.ip = request.remote_ip;
   		@it = it
       @category =  @comment.content.category
       @content =  @comment.content

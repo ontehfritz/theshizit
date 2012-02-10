@@ -1,5 +1,5 @@
 class ItsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :index]
+  before_filter :authenticate_user!, :except => [:show]
   
   def new 
     @new_it = It.new 

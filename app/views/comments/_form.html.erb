@@ -13,6 +13,13 @@
   <div>
   <%= f.text_area :theshiz, :size => "50x5"%>
   </div>
+  
+  <br />
+  Turing Test:
+  <%= f.label :humanizer_answer, @comment.humanizer_question %>
+  <%= f.text_field :humanizer_answer %>
+  <%= f.hidden_field :humanizer_question_id %>
+  
   <div class="actions">
     <%= f.submit %>
   </div>

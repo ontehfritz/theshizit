@@ -1,4 +1,6 @@
 class Content < ActiveRecord::Base
+  include Humanizer
+  require_human_on :create
   default_scope :conditions => ["contents.in_recycling = ?", false]
 	has_many :comments
 	belongs_to :category, :counter_cache => true

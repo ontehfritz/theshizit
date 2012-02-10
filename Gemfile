@@ -8,10 +8,9 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'coderay'
+gem 'humanizer'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
 gem 'mysql2'
 gem 'devise'
 gem "cancan"
