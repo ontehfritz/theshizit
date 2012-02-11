@@ -64,15 +64,26 @@ class CategoriesController < ApplicationController
   		@category.user_id = 0
   		@category.ip = request.remote_ip;
   		
+  		time_diff = 2
+  		
+  	  latest = Category.find(:first,:conditions => ['ip = ?', @category.ip], :order => 'created_at DESC', :limit => 1)
+  	  
+  	  if latest != nil
+  	    time_diff = Time.now - latest.created_at
+  	  end
   		
   		respond_to do |format|
-    		if @category.save
-    			flash[:notice] = 'Category was successfully created.'
-    			format.html { render action: "close",:layout => "dialog" }
-    			format.json { render json: @category, status: :created, location: @category }
+  		  if time_diff > 600
+      		if @category.save
+      			flash[:notice] = 'Category was successfully created.'
+      			format.html { render action: "close",:layout => "dialog" }
+      			format.json { render json: @category, status: :created, location: @category }
+      		else
+      			format.html { render action: "new", layout: "dialog" }
+      			format.json { render json: @category.errors, status: :unprocessable_entity }
+      		end
     		else
-    			format.html { render action: "new", layout: "dialog" }
-    			format.json { render json: @category.errors, status: :unprocessable_entity }
+    		  format.html { render action: "flood", layout: "dialog" }
     		end
     	end
   	 end

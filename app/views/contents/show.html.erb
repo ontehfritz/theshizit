@@ -1,7 +1,7 @@
 <%  require 'coderay' %>
 <script>
 function showAddDialog(){
-	$("#divId").dialog({ title: 'Add Some Shiz' });
+	$("#divId").dialog({ title: 'Add a Comment' });
    	$("#divId").dialog("open");
    	$("#modalIframeId").attr("src","<%= new_it_category_content_comment_url(@content.category.it,@content.category, @content) %>");
    	return false;
@@ -13,6 +13,7 @@ $(document).ready(function() {
 			modal : true,
 			height : 300,
 			width : 500,
+			stack: false,
 			close : function(event, ui) {
 				location.reload(true);
 			}
@@ -47,7 +48,7 @@ $(document).ready(function() {
 <%= CodeRay.scan(@content.theshiz, @content.file_type).div().html_safe %>
 <% elsif @content.class.name == "Link" %>
 <% if @content.is_youtube == true %>
-<iframe width="560" height="315" src="http://www.youtube.com/embed/<%= @content.youtube_id %>?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/<%= @content.youtube_id %>?rel=0&wmode=transparent" frameborder="0" allowfullscreen></iframe>
 <br />
 <% end %>
 <a href="<%= @content.theshiz %>" target="_blank" class="smalllink"><%= @content.theshiz %></a>
