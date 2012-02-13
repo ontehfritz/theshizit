@@ -16,11 +16,6 @@
 			$("#rules").dialog("open");
 			return false;
 		}
-		function showWhat(){
-			$("#what").dialog({ title: 'Here it is ... SHIZ ON IT!!!' });
-			$("#what").dialog("open");
-			return false;
-		}
 		function showHelp(){
 			$("#help").dialog({ title: 'FAQ' });
 			$("#help").dialog("open");
@@ -44,12 +39,6 @@
 				   modal: true,
 				   height: 400,
 				   width: 800,
-			});
-			$("#what").dialog({
-				   autoOpen: false,
-				   modal: true,
-				   height: 350,
-				   width: 600,
 			});
 			$("#help").dialog({
 				   autoOpen: false,
@@ -75,7 +64,7 @@ body{
 </head>
 <body>
 
-<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 30px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a></div>
+<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 25px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a></div>
 <div style="width:70%;text-align: center;margin:0 auto;"><%= yield :shiz_cat %><%= yield :shiz %></div>
 
 <div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
@@ -96,7 +85,7 @@ $(function() {
 
 <div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
 <div id="footer" style="width:%100;text-align: center;background-color: #F0F0F0;">
-<a href="" onclick="return showWhat();" class="smalllink">What is this?</a> | <a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
+<a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
 |  <%= link_to('Moderators', "/its/", :class => "smalllink") %>
 </div>
 <div id="rules" style="display: none;">
@@ -135,18 +124,11 @@ $(function() {
 	</li>
 </ul>
 </div>
-<div id="what" style="display: none;">
-<ul>
-	<li>
-	<b>What is this?</b>
-	<br />
-	It is web board! It is anonymous, yes you have to register, but you only need to enter the username you want and password. None of your information
-	will be posted on the web board, there is no usernames or other information rendered on categories, content, comments or public viewable pages. 
-	</li>
-</ul>
-</div>
 <div id="about" style="display: none;">
-	<p>TheShizit Board v0.2</p>
+	<p>
+		Anonymous web board with a cockamamie name<br />
+		TheShizit Board v0.2
+	</p>
 </div>
 </body>
 </html>

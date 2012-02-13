@@ -19,6 +19,18 @@ $(document).ready(function() {
 		});
 });
 </script>
+<div style="width:70%;text-align:left;margin:0 auto;font-size: 15px;border: 1px solid black;padding:10px;background-color:#E6F5FF;">
+Recent Post:
+<% @recent_post.each do |post| %>
+<% title  = ""%>
+<% if post.class.name == "Question" %> 
+<% title = post.theshiz %>
+<% else %> 
+<% title = post.title %>
+<% end %>
+<%= link_to truncate(title,:length => 12, :ommission => "..."), it_category_content_url(post.category.it, post.category, post), :class => "smalllink", :title => title %>  
+<% end %>	
+</div>
 <% if !@it.locked %>
 <div style="width:70%;text-align: center;margin:0 auto;"><a href="" onclick="return showAddDialog();" class="smalllink"><%=t :add_category_button %><a/></div>
 <% end %>

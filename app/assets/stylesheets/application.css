@@ -32,7 +32,7 @@ a.title {
    -webkit-text-stroke: 1px black;
    color: white;
    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-   font-size: 20px;
+   font-size: 10px;
    text-decoration: none;
    
    text-shadow:
@@ -88,19 +88,19 @@ a.title {
      1px 1px 0 #000;
  }
  
- a.pow {
+ a.comment {
+   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
    color: black;
-   font-family: Pow;
-   font-size: 20px;
-   text-decoration: none;
+   font-size: 14px;
+   text-decoration: underline;
    text-shadow: none;
  }
  
- a.pow:hover {
+ a.comment:hover {
+   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
    color: red;
-   font-family: Pow;
-   font-size: 20px;
-   text-decoration: none;
+   font-size: 14px;
+   text-decoration: underline;
    text-shadow: none;
  }
  
