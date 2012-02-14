@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
   def show
     @sort = params[:sort].nil? ? "pop" : params[:sort]
     @category = Category.find(params[:id])
+    @category.update_click_counter
     
     page = params[:page].nil? ? 1 : params[:page]
 	  if @sort == "recent"
@@ -64,7 +65,7 @@ class CategoriesController < ApplicationController
   		@category.user_id = 0
   		@category.ip = request.remote_ip;
   		
-  		time_diff = 2
+  		time_diff = 601
   		
   	  latest = Category.find(:first,:conditions => ['ip = ?', @category.ip], :order => 'created_at DESC', :limit => 1)
   	  

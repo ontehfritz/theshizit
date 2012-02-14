@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120210010252) do
+ActiveRecord::Schema.define(:version => 20120214005149) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120210010252) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ip"
+    t.integer  "click_count",           :default => 0
   end
 
   create_table "comments", :force => true do |t|
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(:version => 20120210010252) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ip"
+    t.integer  "click_count",                               :default => 0
   end
 
   create_table "delayed_jobs", :force => true do |t|

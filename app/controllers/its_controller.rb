@@ -45,7 +45,8 @@ class ItsController < ApplicationController
 	
 	def show
 	   @it = params[:id].nil? ? It.where(:is_default => true).first : It.find(params[:id])
-	   @recent_post = Content.all(:order => 'created_at DESC', :limit => 9)
+	   @recent_post = Content.all(:order => 'created_at DESC', :limit => 10)
+	   @popular = Content.all(:order => 'click_count DESC', :limit => 10)
 	   @categories = Category.find_all_by_it_id(@it.id)
 	end
 	

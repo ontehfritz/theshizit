@@ -30,10 +30,15 @@ class Content < ActiveRecord::Base
 	def to_param
 		"#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
 	end
-	
 
   def update_counter_cache
     self.category.active_contents_count = Content.count( :conditions => ["in_recycling = 0 AND category_id = ?", self.category.id])
     self.category.save
   end
+  
+  def update_click_counter
+    self.click_count = self.click_count + 1
+    self.save
+  end
+  
 end

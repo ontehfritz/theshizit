@@ -27,4 +27,9 @@ class Category < ActiveRecord::Base
 	  
 	  total
 	end
+	
+	def update_click_counter
+    self.click_count = self.click_count + 1
+    self.save
+  end
 end
