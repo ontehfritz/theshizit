@@ -27,7 +27,6 @@ div.box_round:hover
 body {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
-
 a.title {
    -webkit-text-stroke: 1px black;
    color: white;
