@@ -64,7 +64,7 @@ body{
 </head>
 <body>
 
-<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 25px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a></div>
+<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 25px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a> - Anonymous Message Board</div>
 <div style="width:70%;text-align: center;margin:0 auto;"><%= yield :shiz_cat %><%= yield :shiz %></div>
 
 <div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>

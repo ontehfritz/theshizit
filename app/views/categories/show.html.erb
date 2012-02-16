@@ -71,8 +71,10 @@ $(document).ready(function() {
 <span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" , :class => "smalllink"%></span>
 <% end %>
 <a href="#" style="float:right;padding-right:5px;" name="expand" class="smalllink">+</a><br />
+<% first = "background-color:#E6F5FF;" %>
 <% @contents.each do |content|  %>
-	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :notifications => @notifications} %> 
+	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :notifications => @notifications, :first => first} %> 
+	<% first = ""%>
 <% end %>
 </div>
 <div style="clear:both;"></div>

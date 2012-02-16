@@ -25,6 +25,8 @@ div.box_round:hover
 	background-color: #F8FBEF;
 }                
 body {
+	background-image:url("http://127.0.0.1:3000/assets/shizit_bg.png");
+	background-repeat:no-repeat;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 a.title {
