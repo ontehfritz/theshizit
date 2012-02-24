@@ -44,11 +44,6 @@ class ContentsController < ApplicationController
 	  end
   end
 
-  # GET /contents/1/edit
-  # def edit
-    # @content = Content.find(params[:id])
-  # end
-
   # POST /contents
   # POST /contents.json
   def create
@@ -73,30 +68,13 @@ class ContentsController < ApplicationController
 		  end
 	   end
   end
-
-  # PUT /contents/1
-  # PUT /contents/1.json
-  # def update
-    # @content = Content.find(params[:id])
-# 
-    # respond_to do |format|
-      # if @content.update_attributes(params[:content])
-        # format.html { redirect_to @content, notice: 'Content was successfully updated.' }
-        # format.json { head :ok }
-      # else
-        # format.html { render action: "edit" }
-        # format.json { render json: @content.errors, status: :unprocessable_entity }
-      # end
-    # end
-  # end
-
+  
   # DELETE /contents/1
   # DELETE /contents/1.json
   def destroy
     @content = Content.find(params[:id])
 	  @content.in_recycling = true
-    #@content.destroy
-
+    
     respond_to do |format|
       if (can? :delete, @content)
   		  if @content.save

@@ -19,38 +19,57 @@ $(document).ready(function() {
 		});
 });
 </script>
-<div style="width:70%;text-align:left;margin:0 auto;font-size: 15px;border: 1px solid black;padding:10px;background-color:#E6F5FF;white-space: nowrap;overflow:hidden;">
-Recent Post:
-<% @recent_post.each do |post| %>
-<% title  = ""%>
-<% if post.class.name == "Question" %> 
-<% title = post.theshiz %>
-<% else %> 
-<% title = post.title %>
-<% end %>
-<%= link_to truncate(title,:length => 20, :ommission => "..."), it_category_content_url(post.category.it, post.category, post), :class => "smalllink", :title => title %> &nbsp; 
-<% end %>	
+
+<div id="recent_posts">
+	Recent Post:
+	<% @recent_post.each do |post| %>
+  	<% title  = ""%>
+  	<% if post.class.name == "Question" %> 
+  	 <% title = post.theshiz %>
+  	<% else %> 
+  	 <% title = post.title %>
+  	<% end %>
+  	
+  	<% if post.category != nil %>
+  	 <%= link_to truncate(title,:length => 20, :ommission => "..."), 
+  	   it_category_content_url(post.category.it, 
+  	   post.category, post), :class => "pop", :title => title %> 
+  	   &nbsp;
+  	<% end %> 
+  <% end %>
 </div>
 
 <% if !@it.locked %>
-<div style="width:70%;text-align: center;margin:0 auto;"><a href="" onclick="return showAddDialog();" class="smalllink"><%=t :add_category_button %><a/></div>
+	<div style="width:70%;text-align: left;margin:0 auto;">
+	  <a href="#" onclick="return showAddDialog();" class="smalllink">
+	    <%=t :add_category_button %>
+	  </a>
+	</div>
 <% end %>
-<div id="category" style="width:70%;text-align: center;margin:0 auto;border: solid 2px black;padding: 10px;background-color: rgba(176,176,176, 0.6);">
-<%= render :partial => "categories/list", :locals=>{:categories=> @categories, :notifications => @notifications} %> 
+
+<div id="category">
+<%= render :partial => "categories/list", 
+  :locals=>{:categories=> @categories, :notifications => @notifications} %> 
 </div>
+
 <br />
-<div style="width:70%;text-align:left;margin:0 auto;font-size: 15px;border: 1px solid black;padding:10px;background-color:#FFFFCC;white-space: nowrap;overflow:hidden;">
-Most Viewed:
-<% @popular.each do |post| %>
-<% title  = ""%>
-<% if post.class.name == "Question" %> 
-<% title = post.theshiz %>
-<% else %> 
-<% title = post.title %>
-<% end %>
-<%= link_to truncate(title,:length => 20, :ommission => "..."), it_category_content_url(post.category.it, post.category, post), :class => "smalllink", :title => title %> &nbsp; 
-<% end %>	
+<div id="most_viewed">
+  Most Viewed:
+  <% @popular.each do |post| %>
+  	<% title  = ""%>
+  	<% if post.class.name == "Question" %> 
+  	 <% title = post.theshiz %>
+  	<% else %> 
+  	 <% title = post.title %>
+  	<% end %>
+  	
+  	<% if post.category != nil %>
+  		<%= link_to truncate(title,:length => 20, :ommission => "..."), it_category_content_url(post.category.it, post.category, post), :class => "pop", :title => title %>
+  		&nbsp;
+  	<% end %> 
+  <% end %>
 </div>
+
 <div id="divId" title="Modal Window">
     <iframe id="modalIframeId" width="100%" height="100%"
     marginWidth="0" marginHeight="0" frameBorder="0" scrolling="no"

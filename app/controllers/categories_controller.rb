@@ -20,10 +20,10 @@ class CategoriesController < ApplicationController
     @category.update_click_counter
     
     page = params[:page].nil? ? 1 : params[:page]
+    
 	  if @sort == "recent"
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('created_at DESC')
 	  else
-		  #@contents = Content.find_all_by_category_id(params[:id], :order => "comments_count DESC")
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('active_comments_count DESC')
 	  end
     
@@ -39,6 +39,7 @@ class CategoriesController < ApplicationController
   # GET /categories/new.json
   def new
   	it = It.find(params[:it_id])
+  	
   	if !it.locked
   		@category = Category.new
   		@category.it = it
@@ -50,11 +51,6 @@ class CategoriesController < ApplicationController
   	end
   end
 
-  # GET /categories/1/edit
-  # def edit
-    # @category = Category.find(params[:id])
-  # end
-
   # POST /categories
   # POST /categories.json
   def create
@@ -65,7 +61,7 @@ class CategoriesController < ApplicationController
   		@category.user_id = 0
   		@category.ip = request.remote_ip;
   		
-  		time_diff = 601
+  		time_diff = Shizit::Application.config.category_throttle + 1
   		
   	  latest = Category.find(:first,:conditions => ['ip = ?', @category.ip], :order => 'created_at DESC', :limit => 1)
   	  
@@ -74,45 +70,33 @@ class CategoriesController < ApplicationController
   	  end
   		
   		respond_to do |format|
-  		  if time_diff > 600
-      		if @category.save
-      			flash[:notice] = 'Category was successfully created.'
+  		  if time_diff > Shizit::Application.config.category_throttle
+  		    
+      	  if @category.save
+      		  flash[:notice] = 'Category was successfully created.'
       			format.html { render action: "close",:layout => "dialog" }
       			format.json { render json: @category, status: :created, location: @category }
       		else
       			format.html { render action: "new", layout: "dialog" }
       			format.json { render json: @category.errors, status: :unprocessable_entity }
       		end
+      		
     		else
+    		  
     		  format.html { render action: "flood", layout: "dialog" }
+    		  
     		end
     	end
-  	 end
+  	end
   end
-
-  # PUT /categories/1
-  # PUT /categories/1.json
-  # def update
-    # @category = Category.find(params[:id])
-# 
-    # respond_to do |format|
-      # if @category.update_attributes(params[:category])
-        # format.html { redirect_to @category, notice: 'Category was successfully updated.' }
-        # format.json { head :ok }
-      # else
-        # format.html { render action: "edit" }
-        # format.json { render json: @category.errors, status: :unprocessable_entity }
-      # end
-    # end
-  # end
 
   # DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
     @category = Category.find(params[:id])
+    
     if (can? :delete, @category)
   	  @category.in_recycling = true
-      #@category.destroy
   
   	  if @category.save
   		  respond_to do |format|

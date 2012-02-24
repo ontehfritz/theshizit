@@ -8,9 +8,8 @@ class CreateCategories < ActiveRecord::Migration
   	  t.boolean :in_recycling, :default => false
   	  
   	  t.references :it
-	  
   	  t.references :user
-        t.timestamps
-      end
+      t.timestamps
+    end
   end
 end

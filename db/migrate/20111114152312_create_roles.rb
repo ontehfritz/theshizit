@@ -7,8 +7,7 @@ class CreateRoles < ActiveRecord::Migration
 	
 	Role.create :name => "Admin"
 	Role.create :name => "Moderator"
-	Role.create :name => "Contributer"
-	Role.create :name => "User"
+	
   end
  
   def self.down

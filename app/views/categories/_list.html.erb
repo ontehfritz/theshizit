@@ -1,25 +1,26 @@
-<% i = 0 %>
 <% if categories.size == 0 %>
-<span>No shiz to shiz on, be the first to create a category and become the <b>shiznator!</b></span>
-<%end%>
-<% categories.each do |category| %>
-<span>
-	
-	<% if category.is_nsfw %>
-		<% yours = "background-color: #FFB2B2;" %>
-		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + "px;font-weight:" + (15 + (category.get_total_points * 1)).to_s + ";" + yours, 
-		:confirm => 'You must be 18 or over to views this content?', :title => category.theshiz %>
-	<% else %>
-		<%= link_to category.theshiz, it_category_url(category.it, category),  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + "px;font-weight:" + (15 + (category.get_total_points * 1)).to_s,
-		:title => category.theshiz %>
+Virgin Board! Be the first to create a category.
+<% else %>
+	<% categories.each do |category| %>
+	<span>
+	  <% if category.is_nsfw %>
+	    <%= link_to category.theshiz, it_category_url(category.it, category),  
+		  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + 
+		  "px;font-weight:" + (15 + (category.get_total_points * 1)).to_s + ";background-color: #FFB2B2;", 
+		  :confirm => 'You must be 18 or over to views this content?', :title => category.theshiz %>
+	  <% else %>
+	    <%= link_to category.theshiz, it_category_url(category.it, category),  
+		  :style => "font-size:" +  (15 + (category.get_total_points * 1)).to_s + 
+		  "px;font-weight:" + (15 + (category.get_total_points * 1)).to_s,
+		  :title => category.theshiz %>
+	  <% end %>
+	  
+	  (<%= category.active_contents_count %>) 
+	  
+	  <% if can? :delete, category %>
+	    <%= link_to "X", it_category_path(category.it, category), 
+	      :confirm => 'Are you sure?', :method => :delete %>
+	  <% end %>
+	</span>
 	<% end %>
-	(<%= category.active_contents_count %>) 
-	<% if can? :delete, category %><%= link_to "X", it_category_path(category.it, category), :confirm => 'Are you sure?', :method => :delete %><% end %>
-</span>
-<% i += 1 %>
 <% end %>
-
-
-
-
-

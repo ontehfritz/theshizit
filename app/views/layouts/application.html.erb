@@ -4,23 +4,13 @@
   <title><%=t :title %></title>
   <meta name="keywords" content="<%=t :meta_keywords %>" />
   <meta name="description" content="<%=t :meta_description %>" />
-  <meta name="title" content="<%=t :meta_title %>" />
+  
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
   
   <link rel="shortcut icon" href="/favicon.ico" />
   <script type="text/javascript">
-		function showRules(){
-		    $("#rules").dialog({ title: 'Rules' });
-			$("#rules").dialog("open");
-			return false;
-		}
-		function showHelp(){
-			$("#help").dialog({ title: 'FAQ' });
-			$("#help").dialog("open");
-			return false;
-		}
 		function showAbout(){
 			$("#about").dialog({ title: 'About' });
 			$("#about").dialog("open");
@@ -34,101 +24,51 @@
 				   height: 150,
 				   width: 550,
 			});
-			$("#rules").dialog({
-				   autoOpen: false,
-				   modal: true,
-				   height: 400,
-				   width: 800,
-			});
-			$("#help").dialog({
-				   autoOpen: false,
-				   modal: true,
-				   height: 500,
-				   width: 800,
-			});
-			//$('form').submit(function(){
-			//	$('input[type=submit]', this).attr('disabled', 'disabled');
-			//});
 		});
-</script>
-<!--[if IE]> 
-<style type="text/css">
-a  {
- color: black;
-}
-body{
- color: black;
-}
-</style>
-<![endif]-->
+   </script>
 </head>
 <body>
 
-<div style="width:70%;text-align: center;margin:0 auto;"><a href="/its/<%= @it.to_param %>" style="font-size: 25px;" title="<%=t :title %>" class="title"><%=t :page_header_title %></a> - Anonymous Message Board</div>
-<div style="width:70%;text-align: center;margin:0 auto;"><%= yield :shiz_cat %><%= yield :shiz %></div>
+<div style="width:100%;background-color:rgba(0,0,0, 0.6);">
+  <div style="width:70%;text-align: left;margin:0 auto;padding:0">
+    <a href="/its/<%= @it.to_param %>" style="font-size: 25px;" title="<%=t :title %>" class="title">
+      <%=t :page_header_title %></a>
+      
+  	<%= yield :shiz_cat %><%= yield :shiz %>
+  </div>
+</div>
 
-<div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
+
 <% if !notice.nil? || !alert.nil? %>
-<script>
-$(function() {
-   $('#alerts').delay(10).fadeIn('normal', function() {
-      $(this).delay(2500).fadeOut();
-   });
-});
-</script>
+  <script>
+    $(function() {
+       $('#alerts').delay(10).fadeIn('normal', function() {
+          $(this).delay(2500).fadeOut();
+       });
+    });
+  </script>
 <% end %>
-<div id="alerts" style="display:none;">
-<p class="notice" style="background-color: #FFFF99;" id="flash"><%= notice %></p>
-<p class="alert" style="display:none;background-color: red"><%= alert %></p>
-</div>
-<%= yield %>
 
-<div style="width:70%;text-align: center;margin:0 auto;"><%= image_tag("footer.png") %></div>
+<div id="alerts" style="display:none;position: absolute;">
+  <p class="notice" style="background-color: #FFFF99;" id="flash"><%= notice %></p>
+  <p class="alert" style="display:none;background-color: red"><%= alert %></p>
+</div>
+
+<div id="content">
+  <%= yield %>
+</div>
+
 <div id="footer" style="width:%100;text-align: center;background-color: #F0F0F0;">
-<a href="" onclick="return showRules();" class="smalllink">Rules</a> | <a href="" onclick="return showHelp();" class="smalllink">FAQ</a> | <a href="" onclick="return showAbout();" class="smalllink">About</a>
-|  <%= link_to('Moderators', "/its/", :class => "smalllink") %>
-</div>
-<div id="rules" style="display: none;">
-<ol>
-	<li>
-	Do not post any material that involves a minor doing illegal (under 18) activites.
-	This will not be tolerated!
-	</li>
-	<li>
-	Do not post any material that voilates local or webserver location laws. Breaking the law is strictly prohibited
-	</li>
-	<li>
-	No spamming, automated bots, flooding, or scraping is allowed
-	</li>
-	<li>
-	Please mark categories as Not suitable for work(NSFW) that will contain explicit material.
-	</li>
-	<li>
-	Please have respect for the board, quality posts make a quality board.
-	</li>
-</ol>
+  <a href="#" onclick="return showAbout();" class="smalllink">About</a>
+  <%= link_to('Moderators', "/its/", :class => "smalllink") %>
 </div>
 
-<div id="help" style="display: none;">
-<ul>
-	<li>
-	<u>What is a shiz period?</u>
-	<br />
-	<span style="color:green;">A shiz period begins at the beginning of each month and ends the last day of the month.<br />
-	This means all previous periods are archived and you can no longer post or interact 
-	with periods that have past, However you will still be able to read shiz from past periods. 
-	</li>
-	<li>
-	<u>Why are some categories larger than others?</u><br />
-	<span style="color:green;">As content grows inside a category so does its popularity as well as the font size. This is to emphasize which categories are the top shiz!</span>
-	</li>
-</ul>
-</div>
 <div id="about" style="display: none;">
 	<p>
 		Anonymous web board with a cockamamie name<br />
 		TheShizit Board v0.2
 	</p>
 </div>
+
 </body>
 </html>

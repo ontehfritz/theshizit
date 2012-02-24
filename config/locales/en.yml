@@ -2,13 +2,13 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  title: ":-C~ theSh!z!t: SHIZ ON IT!"
-  meta_keywords: "anonymous messageboard, theshizit, shizit, images, links, post, comments"
-  meta_title: "theshizit: the stuff, the real deal"
-  meta_description: "theshizit: the stuff, the real deal"
+  title: ":-C~ theSh!z!t: Anonymous Web Board!"
+  meta_keywords: "anonymous message board, theshizit, shizit, images, links, post, comments"
+  meta_title: "theshizit: The Anonymous Web board"
+  meta_description: "theshizit: The Anonymous Web board"
   page_header_title: ":-C~ theSh!z!t"
   add_category_button: "Add a Category"
-  add_category_title: "Add some shiz"
+  add_category_title: "Add Category"
   create_category_button: "Create Category"
   archive_link: "More Shiz"
   

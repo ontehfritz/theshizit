@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
 
   create_table "comments", :force => true do |t|
     t.text     "theshiz"
-    t.integer  "vote",         :default => 0
     t.boolean  "in_recycling", :default => false
     t.integer  "user_id"
     t.integer  "content_id"
@@ -52,7 +51,6 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
     t.string   "file_name"
     t.binary   "image_data",            :limit => 16777215
     t.string   "type"
-    t.integer  "vote",                                      :default => 0
     t.integer  "comments_count",                            :default => 0
     t.integer  "active_comments_count",                     :default => 0
     t.boolean  "in_recycling",                              :default => false
@@ -64,37 +62,12 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
     t.integer  "click_count",                               :default => 0
   end
 
-  create_table "delayed_jobs", :force => true do |t|
-    t.integer  "priority",   :default => 0
-    t.integer  "attempts",   :default => 0
-    t.text     "handler"
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "queue"
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
-
   create_table "its", :force => true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "categories_count", :default => 0
     t.boolean  "locked"
     t.boolean  "is_default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "notifications", :force => true do |t|
-    t.integer  "type_id"
-    t.string   "type_name"
-    t.integer  "parent_type_id"
-    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -108,20 +81,6 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
   create_table "roles_users", :id => false, :force => true do |t|
     t.integer "role_id"
     t.integer "user_id"
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.integer  "type_id"
-    t.string   "type_name"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "tones", :force => true do |t|
-    t.string   "mood"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
@@ -140,13 +99,5 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
 
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
-
-  create_table "vote_logs", :force => true do |t|
-    t.integer  "type_id"
-    t.string   "type_name"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end
