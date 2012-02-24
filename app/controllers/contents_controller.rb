@@ -9,7 +9,7 @@ class ContentsController < ApplicationController
     @content = Content.find(params[:id])
     @it = @content.category.it
     @content.update_click_counter
-	
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @content }

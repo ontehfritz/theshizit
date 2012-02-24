@@ -41,6 +41,12 @@ class CommentsController < ApplicationController
   		@comment.theshiz = sanitize(@comment.theshiz)
   		@comment.user_id = 0
   		@comment.ip = request.remote_ip;
+  		latest_comment = Comment.find(:first,:conditions => ['content_id = ?', @comment.content.id], :order => 'created_at DESC', :limit => 1)
+  		
+  		if latest_comment != nil
+  		  @comment.comment_number = latest_comment.comment_number + 1
+  		end
+  		
   		@it = it
       @category =  @comment.content.category
       @content =  @comment.content

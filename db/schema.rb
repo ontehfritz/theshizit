@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214005149) do
+ActiveRecord::Schema.define(:version => 20120224205237) do
 
   create_table "categories", :force => true do |t|
     t.string   "theshiz"
@@ -29,13 +29,14 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
 
   create_table "comments", :force => true do |t|
     t.text     "theshiz"
-    t.boolean  "in_recycling", :default => false
+    t.boolean  "in_recycling",   :default => false
     t.integer  "user_id"
     t.integer  "content_id"
     t.integer  "tone_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "ip"
+    t.integer  "comment_number", :default => 0
   end
 
   create_table "content_types", :force => true do |t|
@@ -68,6 +69,13 @@ ActiveRecord::Schema.define(:version => 20120214005149) do
     t.integer  "categories_count", :default => 0
     t.boolean  "locked"
     t.boolean  "is_default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "replies", :force => true do |t|
+    t.integer  "comment_id"
+    t.integer  "reply_comment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
