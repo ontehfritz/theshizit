@@ -1,7 +1,7 @@
 <%= form_for([@content.category.it, @content.category, @content], :html => {:multipart => true}) do |f| %>
   <% if @content.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@content.errors.count, "error") %> sh!z blocked, Fix the following YO!:</h2>
+      <h2><%= pluralize(@content.errors.count, "error") %> Fix the following:</h2>
       <ul>
       <% @content.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -10,8 +10,10 @@
     </div>
   <% end %>
   <%= f.hidden_field :category_id %>
-  Type<br />
-  <%= select("content", "type", ContentType.all.collect {|t| [ t.type_name, t.type_name ] }, {:prompt => 'Select content type'}) %>
+  Type:<br />
+  <%= select("content", "type", 
+      ContentType.all.collect {|t| [ t.type_name, t.type_name ] }, 
+          {:prompt => 'Select content type'}) %>
   
   <div id="content_title" style="display:none">
 	  <%= f.label :title %><br />
@@ -23,9 +25,9 @@
   </div>
   <div id="content_pic" style="display:none">
     Please select an image: <br />
-	<%= f.file_field :image_file %> <br /> or
-	Url: <br />
-	<%= f.text_area :file_name, :size=>"40x5" %>
+	  <%= f.file_field :image_file %> <br /> or
+	  Url: <br />
+	  <%= f.text_area :file_name, :size=>"40x5" %>
   </div>
   
   <div id="content_shiz" style="display:none">

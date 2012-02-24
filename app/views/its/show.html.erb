@@ -64,7 +64,8 @@ $(document).ready(function() {
   	<% end %>
   	
   	<% if post.category != nil %>
-  		<%= link_to truncate(title,:length => 20, :ommission => "..."), it_category_content_url(post.category.it, post.category, post), :class => "pop", :title => title %>
+  		<%= link_to truncate(title,:length => 20, :ommission => "..."), 
+  		it_category_content_url(post.category.it, post.category, post), :class => "pop", :title => title %>
   		&nbsp;
   	<% end %> 
   <% end %>

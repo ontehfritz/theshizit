@@ -64,17 +64,17 @@ $(document).ready(function() {
 <div style="width:70%;margin:0 auto;">
 <div id="content" style="float:left;width:100%;">
 <% if !@category.it.locked %>
-<%= link_to "add", new_it_category_content_url(@it, @category), :class => "smalllink" %>
+<%= link_to "add", new_it_category_content_url(@category.it, @category), :class => "smalllink" %>
 <% end %>
 <% if @sort == "recent" %>
-<span style="float:right;"> || View By: <%= link_to "Popularity", it_category_url(@it, @category) +  "?sort=pop" , :class => "smalllink"%></span>
+<span style="float:right;"> || View By: <%= link_to "Popularity", it_category_url(@category.it, @category) +  "?sort=pop" , :class => "smalllink"%></span>
 <% else %>
-<span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@it, @category) +  "?sort=recent" , :class => "smalllink"%></span>
+<span style="float:right;"> || View By: <%= link_to "Recent", it_category_url(@category.it, @category) +  "?sort=recent" , :class => "smalllink"%></span>
 <% end %>
 <a href="#" style="float:right;padding-right:5px;" name="expand" class="smalllink">+</a><br />
 <% first = "background-color:#E6F5FF;" %>
 <% @contents.each do |content|  %>
-	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :notifications => @notifications, :first => first} %> 
+	<%= render :partial => "contents/shiz_summary", :locals=>{:content=> content, :first => first} %> 
 	<% first = ""%>
 <% end %>
 </div>

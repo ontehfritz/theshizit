@@ -2,17 +2,6 @@ class ContentsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   #before_filter :authenticate_user!, :except => [:show, :pic]
   load_and_authorize_resource :only => [:delete, :update]
-  # GET /contents
-  # GET /contents.json
-  
-  def index
-    @contents = Content.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @contents }
-    end
-  end
 
   # GET /contents/1
   # GET /contents/1.json

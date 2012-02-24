@@ -25,4 +25,8 @@ class Link < Content
     tube_id
 	end
 	
+	def symbol
+	  "URL"
+	end
+	
 end

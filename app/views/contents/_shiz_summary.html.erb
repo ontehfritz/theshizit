@@ -1,33 +1,28 @@
+<%  require 'coderay' %>
 <div id="content_item" style="border: 1px solid black; padding: 10px;<%= first %>" class="shadow box_round">
 <div style="float:left;width:80%;">
-	<% yours = "" %>
-   
-		<div class="content_title" style="<%= yours %>">
-			<% if content.class.name == "Question" %>
-				<%= link_to truncate(content.theshiz, :length => 50, :ommission => "..."), it_category_content_url(content.category.it, content.category, content)  %>
-			<% else %>
-				<%= link_to content.title, it_category_content_url(content.category.it, content.category, content)  %>
-			<% end %>
-			<br />
-			<%= time_ago_in_words(content.created_at.to_s, true) %> Ago
-		</div>
+  <div class="content_title">
+	<%= link_to content.title, it_category_content_url(content.category.it, 
+	         content.category, content)  %>
+	<br />
+	<%= time_ago_in_words(content.created_at.to_s, true) %> Ago
+	</div>
 	<div style="display:none;" class="s">
 	<% if content.class.name == "Pic" %>
 	<div>
 		<% if content.image_data != nil %>
-			<%= image_tag(pic_it_category_content_url(content.category.it, content.category,content), :alt => "Pic", :border => 1, :size => "100x100") %>
+			<%= image_tag(pic_it_category_content_url(content.category.it, 
+			               content.category,content), :alt => "Pic", :border => 1, :size => "100x100") %>
 		<% else %>
 			<%= image_tag(content.file_name, :alt => "Pic", :border => 1, :size => "100x100") %>
 		<% end%>
-		
 	</div>
 	<% end %>
 	<div class="content_shiz">
-		
-			<% case content.class.name %>
-			<% when "Pic" %>
+	  <% case content.class.name %>
+		  <% when "Pic" %>
 				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
-			<% when "Text" %>
+	    <% when "Text" %>
 				<%= content.theshiz.gsub("\n", "<br />").html_safe %>
 			<% when "Question" %>
 				<%= content.theshiz %>
@@ -38,28 +33,14 @@
 				<% end %>
 				<a href="<%= content.theshiz %>" target="_blank" class="smalllink"><%= content.theshiz %></a>
 			<% when "Code" %>
-				
+				<%= CodeRay.scan(content.theshiz, content.file_type).div().html_safe %>
 			<% end %>
-		
 	</div>
 	</div>
 </div>
 <div style="float:left;text-align:center;">
 <span style="font-size:30px;color:#E8E8E8;">
-<% case content.class.name %>
-<% when "Pic" %>
-:)~
-<% when "Text" %>
->:-C
-<% when "Blog" %>
-:&
-<% when "Question" %>
-?
-<% when "Code" %>
-{01}
-<% when "Link" %>
-URL
-<% end %>
+<%= content.symbol %>
 </span>
 </div>
 <div id="content_goodies" style="clear:both;font-size:10px;">Comments(<%= content.active_comments_count %>)</div>

@@ -1,17 +1,7 @@
 class CategoriesController < ApplicationController
   #before_filter :authenticate_user!, :except => [:show, :create]
   load_and_authorize_resource :only => [:delete, :update]
-  # GET /categories
-  # GET /categories.json
-  def index
-    @categories = Category.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @categories }
-    end
-  end
-
+ 
   # GET /categories/1
   # GET /categories/1.json
   def show
@@ -26,7 +16,7 @@ class CategoriesController < ApplicationController
 	  else
 		  @contents = Content.where(:category_id => params[:id]).paginate(:page => page).order('active_comments_count DESC')
 	  end
-    
+    #application layout page needs this
 	  @it = @category.it
 	
     respond_to do |format|
@@ -80,11 +70,11 @@ class CategoriesController < ApplicationController
       			format.html { render action: "new", layout: "dialog" }
       			format.json { render json: @category.errors, status: :unprocessable_entity }
       		end
-      		
     		else
-    		  
-    		  format.html { render action: "flood", layout: "dialog" }
-    		  
+    		  @category.errors.add("theshiz", "Please wait: " + 
+    		        (Shizit::Application.config.category_throttle / 60).to_s + "mins. Before creating another category.")
+    		  format.html { render action: "new", layout: "dialog" }
+          format.json { render json: @category.errors, status: :unprocessable_entity }
     		end
     	end
   	end

@@ -2,18 +2,7 @@ class CommentsController < ApplicationController
   include ActionView::Helpers::SanitizeHelper
   #before_filter :authenticate_user!, :except => [:show]
   load_and_authorize_resource :only => [:delete, :update, :edit]
-  # GET /comments
-  # GET /comments.json
-   
-  def index
-    @comments = Comment.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @comments }
-    end
-  end
-
+  
   # GET /comments/1
   # GET /comments/1.json
   def show
@@ -42,12 +31,7 @@ class CommentsController < ApplicationController
   		end
   	end
   end
-
-  # GET /comments/1/edit
-  #def edit
-  #  @comment = Comment.find(params[:id])
-  #end
-
+  
   # POST /comments
   # POST /comments.json
   def create
@@ -84,7 +68,8 @@ class CommentsController < ApplicationController
     if (can? :delete, @comment)
     	if @comment.save
     		respond_to do |format|
-    		  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
+    		  format.html { redirect_to it_category_content_url(@comment.content.category.it, 
+    		    @comment.content.category, @comment.content) }
     		  format.json { head :ok }
     		end
     	end
