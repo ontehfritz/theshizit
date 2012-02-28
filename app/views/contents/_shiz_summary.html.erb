@@ -27,10 +27,7 @@
 			<% when "Question" %>
 				<%= content.theshiz %>
 			<% when "Link" %>
-				<% if content.is_youtube == true %>
-					<iframe width="560" height="315" src="http://www.youtube.com/embed/<%= content.youtube_id %>?rel=0" frameborder="0" allowfullscreen></iframe>
-					<br />
-				<% end %>
+				<%= content.render_html.html_safe %>
 				<a href="<%= content.theshiz %>" target="_blank" class="smalllink"><%= content.theshiz %></a>
 			<% when "Code" %>
 				<%= CodeRay.scan(content.theshiz, content.file_type).div().html_safe %>

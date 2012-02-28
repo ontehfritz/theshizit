@@ -7,6 +7,7 @@ gem 'exception_notification'
 gem 'daemons'
 gem 'coderay'
 gem 'humanizer'
+gem 'ruby-oembed'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 gem 'mysql2'
