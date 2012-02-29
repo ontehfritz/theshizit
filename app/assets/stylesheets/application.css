@@ -133,6 +133,22 @@ a.title {
    text-decoration: underline;
    text-shadow: none;
  }
+ a.footer {
+   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+   color: white;
+   font-size: 12px;
+   text-decoration: underline;
+   
+   text-shadow: none;
+ }
+ 
+ a.footer:hover {
+   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+   color: red;
+   font-size: 12px;
+   text-decoration: underline;
+   text-shadow: none;
+ }
  
  a.pop {
    font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
@@ -177,7 +193,7 @@ p.comments
  
 #recent_posts
 {
-  width:100%;
+  width:99.6%;
   text-align:left;
   margin:0 auto;
   font-size: 10px;
@@ -190,7 +206,7 @@ p.comments
  
 #most_viewed
 {
-  width:100%;
+  width:99.6%;
   text-align:left;
   margin:0 auto;
   font-size: 11px;
