@@ -61,7 +61,6 @@ class CategoriesController < ApplicationController
   		
   		respond_to do |format|
   		  if time_diff > Shizit::Application.config.category_throttle
-  		    
       	  if @category.save
       		  flash[:notice] = 'Category was successfully created.'
       			format.html { render action: "close",:layout => "dialog" }
@@ -72,7 +71,7 @@ class CategoriesController < ApplicationController
       		end
     		else
     		  @category.errors.add("theshiz", "Please wait: " + 
-    		        (Shizit::Application.config.category_throttle / 60).to_s + "mins. Before creating another category.")
+    		        (Shizit::Application.config.category_throttle).to_s + " seconds. Before creating another category.")
     		  format.html { render action: "new", layout: "dialog" }
           format.json { render json: @category.errors, status: :unprocessable_entity }
     		end

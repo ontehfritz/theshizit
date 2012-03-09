@@ -27,7 +27,7 @@ $(document).ready(function() {
 <% content_for :shiz_cat do %>
 	/<%= @content.title %>
 <% end %>
-<div id="content_item">
+<div id="content_item" style="margin:10px;">
 <% if (can? :delete, @content) %>
 	<%= link_to "X", [@content.category.it, @content.category, @content], 
 	         :confirm => 'Are you sure?', 
@@ -35,7 +35,7 @@ $(document).ready(function() {
 <% end %>
 <div id="content_title">
 <h3><%= @content.title %></h3>
-<%= time_ago_in_words(@content.created_at, true) %> Ago
+<span style="font-size: 12px;">Posted: <%= time_ago_in_words(@content.created_at, true) %> ago</span>
 </div>
 <% if @content.class.name == "Pic" %>
 	<div>
@@ -58,15 +58,17 @@ $(document).ready(function() {
 <% end %>
 </div>
 <br />
-<div id="content_goodies">
-Comments(<%= @content.comments.count.to_s %>)
+<div id="content_goodies" style="font-size: 13px;">
+Comments (<%= @content.comments.count.to_s %>)
 </div>
 <hr />
 </div>
+<div style="margin:10px;">
 <% if !@content.category.it.locked %>
 	<a href onclick="return showAddDialog();" class="smalllink">Add Comment</a>
 <% end %>
-<div style="border:1px dotted black;padding:10px;">
+</div>
+<div style="border:1px dotted black;padding:10px;margin:10px;">
 <% @content.comments.each do |comment|  %>
 	<%= render :partial => "comments/comment", :locals=>{:comment=> comment, :notifications => @notifications} %> 
 <% end %>

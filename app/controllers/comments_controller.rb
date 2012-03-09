@@ -51,15 +51,29 @@ class CommentsController < ApplicationController
       @category =  @comment.content.category
       @content =  @comment.content
       
+      time_diff = Shizit::Application.config.comment_throttle + 1
+      
+      latest = Comment.find(:first,:conditions => ['ip = ?', @comment.ip], :order => 'created_at DESC', :limit => 1)
+      
+      if latest != nil
+        time_diff = Time.now - latest.created_at
+      end
+      
   		respond_to do |format|
-  		  if @comment.save
-  			  flash[:notice] = 'Comment was successfully created.'
-  			#render :js => "$(parent.document).find('.ui-dialog');window.parent.$('#divId').dialog('close');"
-  			  format.html { render action: "close", :layout => "dialog"}
-  			  format.json { render json: @comment, status: :created, location: @comment }
+  		  if time_diff > Shizit::Application.config.comment_throttle
+    		  if @comment.save
+    			  flash[:notice] = 'Comment was successfully created.'
+    			  format.html { render action: "close", :layout => "dialog"}
+    			  format.json { render json: @comment, status: :created, location: @comment }
+    		  else
+    			  format.html { render action: "new", :layout => "dialog"}
+    			  format.json { render json: @comment.errors, status: :unprocessable_entity }
+    		  end
   		  else
-  			  format.html { render action: "new", :layout => "dialog"}
-  			  format.json { render json: @comment.errors, status: :unprocessable_entity }
+  		    @comment.errors.add("theshiz", "Please wait: " + 
+                (Shizit::Application.config.comment_throttle).to_s + " seconds. Before posting another comment.")
+          format.html { render action: "new", layout: "dialog" }
+          format.json { render json: @comment.errors, status: :unprocessable_entity }
   		  end
   		end
   	 end

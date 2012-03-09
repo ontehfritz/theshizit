@@ -44,15 +44,31 @@ class ContentsController < ApplicationController
 		  @content.user_id = 0
 		  @content.ip = request.remote_ip;
 		  @it = @content.category.it
+		  
+		  time_diff = Shizit::Application.config.content_throttle + 1
+      
+      latest = Content.find(:first,:conditions => ['ip = ?', @content.ip], :order => 'created_at DESC', :limit => 1)
+      
+      if latest != nil
+        time_diff = Time.now - latest.created_at
+      end
+      
 
 		  respond_to do |format|
-		    if @content.save
-			     flash[:notice] = 'Content was successfully created.'
-			     format.html { redirect_to it_category_url(@content.category.it, @content.category) }
-			     format.json { render json: @content, status: :created, location: @content }
+		    if time_diff > Shizit::Application.config.content_throttle
+  		    if @content.save
+  			     flash[:notice] = 'Content was successfully created.'
+  			     format.html { redirect_to it_category_url(@content.category.it, @content.category) }
+  			     format.json { render json: @content, status: :created, location: @content }
+  		    else
+  			     format.html { render action: "new"}
+  			     format.json { render json: @content.errors, status: :unprocessable_entity }
+  		    end
 		    else
-			     format.html { render action: "new"}
-			     format.json { render json: @content.errors, status: :unprocessable_entity }
+		      @content.errors.add("theshiz", "Please wait: " + 
+                (Shizit::Application.config.content_throttle).to_s + " seconds. Before posting another.")
+          format.html { render action: "new" }
+          format.json { render json: @content.errors, status: :unprocessable_entity }
 		    end
 		  end
 	   end
