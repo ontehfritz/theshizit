@@ -1,5 +1,5 @@
 class ItsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!, :except => [:show, :activity]
   
   def new 
     @new_it = It.new 
@@ -78,5 +78,13 @@ class ItsController < ApplicationController
         end
       end
 	  end
+	end
+	
+	def activity
+	  @recent_post = Content.all(:order => 'created_at DESC', :limit => 20)
+    @popular_post = Content.all(:order => 'click_count DESC', :limit => 20)
+    @recent_categories = Category.all(:order =>'created_at DESC', :limit => 20)
+    @popular_categories = Category.all(:order =>'click_count DESC', :limit => 20)
+    @recent_comments = Comment.all(:order => 'created_at DESC', :limit => 20)
 	end
 end
