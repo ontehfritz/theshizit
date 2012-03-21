@@ -81,10 +81,14 @@ class ItsController < ApplicationController
 	end
 	
 	def activity
+	  @it = It.where(:is_default => true).first
 	  @recent_post = Content.all(:order => 'created_at DESC', :limit => 20)
     @popular_post = Content.all(:order => 'click_count DESC', :limit => 20)
     @recent_categories = Category.all(:order =>'created_at DESC', :limit => 20)
     @popular_categories = Category.all(:order =>'click_count DESC', :limit => 20)
     @recent_comments = Comment.all(:order => 'created_at DESC', :limit => 20)
+    @category_count = Category.count()
+    @post_count = Content.count()
+    @comment_count = Comment.count()
 	end
 end

@@ -1,7 +1,7 @@
 class Comment < ActiveRecord::Base
   include Humanizer
   require_human_on :create
-  default_scope :conditions => ["comments.in_recycling = ?", false]
+  default_scope :conditions => ["comments.in_recycling = ? and comments.content_id is not null", false]
   validates :theshiz, :presence => true
 	belongs_to :content, :counter_cache => true
 	after_save :update_counter_cache

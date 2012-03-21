@@ -1,0 +1,72 @@
+<div style="width:70%;margin:0 auto;">
+<div>
+  Recent Comments:<br />
+  <% @recent_comments.each do |comment| %>
+    <% if comment.content != nil%>
+    <span>
+    <p class="comments">
+    <%= comment.comment_text.html_safe %><br />
+    <%= link_to "link", it_category_content_url(comment.content.category.it, 
+           comment.content.category, comment.content), :style => "font-size:12px;" %>
+    </p>
+    </span>
+    <% end %>
+  <% end %>
+</div>
+<div>
+<div>
+  Recent Categories:<br />
+  <% @recent_categories.each do |category| %>
+  <span>
+  <p style="border: 1px solid black;background: lightgrey;font-size: 12px;">
+    <%= link_to category.theshiz, it_category_url(category.it, category), :title => category.theshiz %>
+    <br />
+    <b>Views:</b> <%= category.click_count %>
+    <b>Posts:</b> <%= category.active_contents_count %><br />
+    <b>Created:</b> <%= category.created_at.to_s %> 
+  </p>
+  </span>
+  <% end %>
+</div>
+<div>
+  Popular Categories:<br />
+  <% @popular_categories.each do |category| %>
+  <span>
+  <p style="border: 1px solid black;background: lightgrey;font-size: 12px;">
+      <%= link_to category.theshiz, it_category_url(category.it, category), :title => category.theshiz %>
+      <br />
+      <b>Views:</b> <%= category.click_count %>
+      <b>Posts:</b> <%= category.active_contents_count %><br />
+      <b>Created:</b> <%= category.created_at.to_s %> 
+  </p>
+  </span>
+  <% end %>
+</div>
+</div>
+<div>
+  Recent Posts:<br />
+  <% @recent_post.each do |post| %>
+  <span>
+  <p style="border: 1px solid black;background: lightgrey;font-size: 12px;">
+  <%= link_to post.title, it_category_content_url(post.category.it, 
+           post.category, post)  %><br />
+    <b>Views:</b> <%= post.click_count %>
+    <b>Comments:</b> <%= post.active_comments_count %><br />
+    <b>Created:</b> <%= post.created_at.to_s %> 
+  </p>
+  <% end %>
+</div>
+<div>
+  Popular Posts:<br />
+  <% @popular_post.each do |post| %>
+  <p style="border: 1px solid black;background: lightgrey;font-size: 12px;">
+  <%= link_to post.title, it_category_content_url(post.category.it, 
+           post.category, post)  %><br />
+    <b>Views:</b> <%= post.click_count %>
+    <b>Comments:</b> <%= post.active_comments_count %><br />
+    <b>Created:</b> <%= post.created_at.to_s %> 
+  </p>
+  <% end %>
+</div>
+<div style="clear:both;"></div>
+</div>
