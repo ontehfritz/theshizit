@@ -44,10 +44,17 @@ class ItsController < ApplicationController
 	end
 	
 	def show
+	   @view = params[:view].nil? ? "category" : params[:view]
 	   @it = params[:id].nil? ? It.where(:is_default => true).first : It.find(params[:id])
 	   @recent_post = Content.all(:order => 'created_at DESC', :limit => 20)
 	   @popular = Content.all(:order => 'click_count DESC', :limit => 20)
-	   @categories = Category.find_all_by_it_id(@it.id)
+	   if @view == "posts"
+	     @posts = Content.all(:include => :category, :joins => :category, 
+	         :conditions => ["categories.in_recycling = ? and categories.it_id = ?", false, @it.id])
+	   else
+	     @categories = Category.find_all_by_it_id(@it.id)
+	   end
+	   
 	end
 	
 	def edit

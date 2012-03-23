@@ -39,21 +39,36 @@ $(document).ready(function() {
   <% end %>
 </div>
 <br />
-<% if !@it.locked %>
+<% if !@it.locked && @view == "category" %>
 	<div style="width:70%;text-align: left;margin:0 auto;">
 	  <a href="#" onclick="return showAddDialog();" class="smalllink">
 	    <%=t :add_category_button %>
 	  </a>
-	  ||
+	  •
+	  <a href="/its/<%= @it.to_param %>?view=posts" title="Posts Cloud" class="smalllink">
+      Post Cloud</a>
+    •
 	  <a href="../activity" class="smalllink">Activity</a>
 	</div> 
+<% else %>
+<div style="width:70%;text-align: left;margin:0 auto;">
+    <a href="/its/<%= @it.to_param %>" title="Back to category cloud" class="smalllink">
+      Category Cloud</a>
+    •
+    <a href="../activity" class="smalllink">Activity</a>
+  </div> 
 <% end %>
-
 <div id="category">
+<% if @view == "posts"%>
+<%= render :partial => "contents/list", 
+  :locals=>{:posts=> @posts} %> 
+<% else %>
+
 <%= render :partial => "categories/list", 
   :locals=>{:categories=> @categories, :notifications => @notifications} %> 
-</div>
 
+<% end %>
+</div>
 <br />
 <div id="most_viewed">
   Most Viewed:

@@ -12,9 +12,9 @@
 	<div>
 		<% if content.image_data != nil %>
 			<%= image_tag(pic_it_category_content_url(content.category.it, 
-			               content.category,content), :alt => "Pic", :border => 1, :size => "100x100") %>
+			               content.category,content), :alt => "Pic", :border => 1) %>
 		<% else %>
-			<%= image_tag(content.file_name, :alt => "Pic", :border => 1, :size => "100x100") %>
+			<%= image_tag(content.file_name, :alt => "Pic", :border => 1) %>
 		<% end%>
 	</div>
 	<% end %>
