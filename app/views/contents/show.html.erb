@@ -65,7 +65,8 @@ Comments (<%= @content.comments.count.to_s %>)
 </div>
 <div style="margin:10px;">
 <% if !@content.category.it.locked %>
-	<a href onclick="return showAddDialog();" class="smalllink">Add Comment</a>
+	<a href="<%= new_it_category_content_comment_url(@content.category.it,
+   	      @content.category, @content) %>" class="smalllink">Add Comment</a>
 <% end %>
 </div>
 <div style="border:1px dotted black;padding:10px;margin:10px;">

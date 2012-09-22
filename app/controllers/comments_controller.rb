@@ -26,7 +26,7 @@ class CommentsController < ApplicationController
   		@comment.content_id = params[:content_id]
   		
   		respond_to do |format|
-  		  format.html { render :layout => "dialog" }# new.html.erb
+  		  format.html { render :layout => "application" }# new.html.erb
   		  format.json { render json: @comment }
   		end
   	end
@@ -63,16 +63,16 @@ class CommentsController < ApplicationController
   		  if time_diff > Shizit::Application.config.comment_throttle
     		  if @comment.save
     			  flash[:notice] = 'Comment was successfully created.'
-    			  format.html { render action: "close", :layout => "dialog"}
+    			  format.html { redirect_to it_category_content_url(@comment.content.category.it, @comment.content.category, @comment.content) }
     			  format.json { render json: @comment, status: :created, location: @comment }
     		  else
-    			  format.html { render action: "new", :layout => "dialog"}
+    			  format.html { render action: "new"}
     			  format.json { render json: @comment.errors, status: :unprocessable_entity }
     		  end
   		  else
   		    @comment.errors.add("theshiz", "Please wait: " + 
                 (Shizit::Application.config.comment_throttle).to_s + " seconds. Before posting another comment.")
-          format.html { render action: "new", layout: "dialog" }
+          format.html { render action: "new" }
           format.json { render json: @comment.errors, status: :unprocessable_entity }
   		  end
   		end

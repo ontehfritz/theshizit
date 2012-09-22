@@ -35,7 +35,7 @@ class CategoriesController < ApplicationController
   		@category.it = it
   		
   		respond_to do |format|
-  		  format.html  {render :layout => "dialog"}# new.html.erb
+  		  format.html  {render :layout => "application"}# new.html.erb
   		  format.json { render json: @category }
   		end
   	end
@@ -63,16 +63,16 @@ class CategoriesController < ApplicationController
   		  if time_diff > Shizit::Application.config.category_throttle
       	  if @category.save
       		  flash[:notice] = 'Category was successfully created.'
-      			format.html { render action: "close",:layout => "dialog" }
+      			format.html { redirect_to it_url(@category.it) }
       			format.json { render json: @category, status: :created, location: @category }
       		else
-      			format.html { render action: "new", layout: "dialog" }
+      			format.html { render action: "new"}
       			format.json { render json: @category.errors, status: :unprocessable_entity }
       		end
     		else
     		  @category.errors.add("theshiz", "Please wait: " + 
     		        (Shizit::Application.config.category_throttle).to_s + " seconds. Before creating another category.")
-    		  format.html { render action: "new", layout: "dialog" }
+    		  format.html { render action: "new"}
           format.json { render json: @category.errors, status: :unprocessable_entity }
     		end
     	end

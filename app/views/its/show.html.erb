@@ -41,7 +41,7 @@ $(document).ready(function() {
 <br />
 <% if !@it.locked && @view == "category" %>
 	<div style="width:70%;text-align: left;margin:0 auto;">
-	  <a href="#" onclick="return showAddDialog();" class="smalllink">
+	  <a href="<%= new_it_category_url(@it) %>" class="smalllink">
 	    <%=t :add_category_button %>
 	  </a>
 	  •
