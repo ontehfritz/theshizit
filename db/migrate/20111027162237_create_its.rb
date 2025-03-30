@@ -1,4 +1,4 @@
-class CreateIts < ActiveRecord::Migration
+class CreateIts < ActiveRecord::Migration[6.1]
   def change
     create_table :its do |t|
 	  t.string :name

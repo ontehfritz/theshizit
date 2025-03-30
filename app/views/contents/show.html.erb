@@ -35,7 +35,7 @@ $(document).ready(function() {
 <% end %>
 <div id="content_title">
 <h3><%= @content.title %></h3>
-<span style="font-size: 12px;">Posted: <%= time_ago_in_words(@content.created_at, true) %> ago</span>
+<span style="font-size: 12px;">Posted: <%= time_ago_in_words(@content.created_at, include_seconds:true) %> ago</span>
 </div>
 <% if @content.class.name == "Pic" %>
 	<div>

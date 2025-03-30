@@ -1,5 +1,5 @@
 class ItsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :activity]
+  before_action :authenticate_user!, :except => [:show, :activity]
   
   def new 
     @new_it = It.new 
@@ -40,22 +40,24 @@ class ItsController < ApplicationController
   
 	def index
 	    @it = It.where(:is_default => true).first
-	    @its = It.find(:all, :order => "created_at DESC")
+      @its = It.order(created_at: :desc)
 	end
-	
-	def show
-	   @view = params[:view].nil? ? "category" : params[:view]
-	   @it = params[:id].nil? ? It.where(:is_default => true).first : It.find(params[:id])
-	   @recent_post = Content.all(:order => 'created_at DESC', :limit => 20)
-	   @popular = Content.all(:order => 'click_count DESC', :limit => 20)
-	   if @view == "posts"
-	     @posts = Content.all(:include => :category, :joins => :category, 
-	         :conditions => ["categories.in_recycling = ? and categories.it_id = ?", false, @it.id])
-	   else
-	     @categories = Category.find_all_by_it_id(@it.id)
-	   end
-	   
-	end
+
+  def show
+    @view = params[:view].nil? ? "category" : params[:view]
+    @it = params[:id].nil? ? It.where(:is_default => true).first : It.find(params[:id])
+    @recent_post = Content.order('created_at DESC').limit(20)
+    @popular_post = Content.order('click_count DESC').limit(20)
+    @popular = @popular_post  # <- added this line for your view
+    if @view == "posts"
+      @posts = Content.includes(:category)
+                      .joins(:category)
+                      .where("categories.in_recycling = ? and categories.it_id = ?", false, @it.id)
+    else
+      @categories = Category.where(it_id: @it.id)
+    end
+  end
+
 	
 	def edit
 	   @new_it = It.find(params[:id])
@@ -88,14 +90,13 @@ class ItsController < ApplicationController
 	end
 	
 	def activity
-	  @it = It.where(:is_default => true).first
-	  @recent_post = Content.all(:order => 'created_at DESC', :limit => 20)
-    @popular_post = Content.all(:order => 'click_count DESC', :limit => 20)
-    @recent_categories = Category.all(:order =>'created_at DESC', :limit => 20)
-    @popular_categories = Category.all(:order =>'click_count DESC', :limit => 20)
-    @recent_comments = Comment.all(:order => 'created_at DESC', :limit => 20)
-    @category_count = Category.count()
-    @post_count = Content.count()
-    @comment_count = Comment.count()
+    @recent_post = Content.order('created_at DESC').limit(20)
+    @popular_post = Content.order('click_count DESC').limit(20)
+    @recent_categories = Category.order('created_at DESC').limit(20)
+    @popular_categories = Category.order('click_count DESC').limit(20)
+    @recent_comments = Comment.order('created_at DESC').limit(20)
+    @category_count = Category.count
+    @post_count = Content.count
+    @comment_count = Comment.count
 	end
 end

@@ -1,7 +1,7 @@
 class Category < ActiveRecord::Base
   include Humanizer
   require_human_on :create
-	default_scope :conditions => ["categories.in_recycling = ?", false]
+	default_scope { where(in_recycling: false) }
 	validates :theshiz, :presence => true, :length => { :maximum => 20 }, :uniqueness => { :scope => :it_id,
     :message => "This category has already been created" }
 	has_many :contents

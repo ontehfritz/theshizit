@@ -9,9 +9,11 @@ class Link < Content
 	  html = ""
 	  begin
 	   OEmbed::Providers.register_all
-	   #OEmbed::Providers.register(OEmbed::Providers::SoundCloud)
+	   OEmbed::Providers.register(OEmbed::Providers::SoundCloud)
+		 OEmbed::Providers.register(OEmbed::Providers::Youtube)
+
 	   resource = OEmbed::Providers.get(self.theshiz)
-	   return html = resource.html.gsub('feature=oembed','wmode=transparent')   
+	   return html = resource.html.gsub('feature=oembed','wmode=transparent')
 	  rescue
 	   html = ""
 	  end

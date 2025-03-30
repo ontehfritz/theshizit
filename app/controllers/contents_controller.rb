@@ -38,7 +38,7 @@ class ContentsController < ApplicationController
   def create
     it = It.find(params[:it_id])
 	  if !it.locked
-		  @content = params[:content][:type].constantize.new(params[:content])
+			@content = params[:content][:type].constantize.new(content_params)
 		  @content.title = strip_tags(@content.title)
 		  @content.theshiz = sanitize(@content.theshiz)
 		  @content.user_id = 0
@@ -46,8 +46,8 @@ class ContentsController < ApplicationController
 		  @it = @content.category.it
 		  
 		  time_diff = Shizit::Application.config.content_throttle + 1
-      
-      latest = Content.find(:first,:conditions => ['ip = ?', @content.ip], :order => 'created_at DESC', :limit => 1)
+
+			latest = Content.where(ip: @content.ip, in_recycling: false).order(created_at: :desc).first
       
       if latest != nil
         time_diff = Time.now - latest.created_at
@@ -95,5 +95,21 @@ class ContentsController < ApplicationController
     @image = @content.image_data
     send_data @image, :type => @content.file_type, 
         :filename => @content.file_name, :disposition => 'inline'
-  end
+	end
+
+	private
+
+	def content_params
+		params.require(:content).permit(
+			:category_id,
+			:type,
+			:title,
+			:file_type,
+			:file_name,
+			:theshiz,
+			:humanizer_answer,
+			:humanizer_question_id,
+			:image_file
+		)
+	end
 end

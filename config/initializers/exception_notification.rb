@@ -1,4 +1,6 @@
-Shizit::Application.config.middleware.use ExceptionNotifier,
-  :email_prefix => "[ERROR] ",
-  :sender_address => '"Error" <error@theshizit.com>',
-  :exception_recipients => ['fritz@theshizit.com']
+Shizit::Application.config.middleware.use ExceptionNotification::Rack,
+    email: {
+      email_prefix: "[ERROR] ",
+      sender_address: %{"Error" <error@theshizit.com>},
+      exception_recipients: %w[fritz@theshizit.com]
+    }
