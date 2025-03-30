@@ -1,14 +1,16 @@
 class Comment < ActiveRecord::Base
   include Humanizer
   require_human_on :create
-  default_scope :conditions => ["comments.in_recycling = ? and comments.content_id is not null", false]
+  default_scope {
+    where(in_recycling: false).where.not(content_id: nil)
+  }
   validates :theshiz, :presence => true
 	belongs_to :content, :counter_cache => true
 	after_save :update_counter_cache
   after_destroy :update_counter_cache
 	
   def update_counter_cache
-    self.content.active_comments_count = Comment.count( :conditions => ["in_recycling = 0 AND content_id = ?", self.content.id])
+    self.content.active_comments_count = Comment.where(in_recycling: 0, content_id: self.content.id).count
     self.content.save
   end
   

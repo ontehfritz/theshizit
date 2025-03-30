@@ -43,43 +43,39 @@ class CategoriesController < ApplicationController
 
   # POST /categories
   # POST /categories.json
-  def create
-  	it = It.find(params[:it_id])
-  	if !it.locked
-  		@category = Category.new(params[:category])
-  		@category.it = it
-  		@category.user_id = 0
-  		@category.ip = request.remote_ip;
-  		
-  		time_diff = Shizit::Application.config.category_throttle + 1
-  		
-  	  latest = Category.find(:first,:conditions => ['ip = ?', @category.ip], :order => 'created_at DESC', :limit => 1)
-  	  
-  	  if latest != nil
-  	    time_diff = Time.now - latest.created_at
-  	  end
-  		
-  		respond_to do |format|
-  		  if time_diff > Shizit::Application.config.category_throttle
-      	  if @category.save
-      		  flash[:notice] = 'Category was successfully created.'
-      			format.html { redirect_to it_url(@category.it) }
-      			format.json { render json: @category, status: :created, location: @category }
-      		else
-      			format.html { render action: "new"}
-      			format.json { render json: @category.errors, status: :unprocessable_entity }
-      		end
-    		else
-    		  @category.errors.add("theshiz", "Please wait: " + 
-    		        (Shizit::Application.config.category_throttle).to_s + " seconds. Before creating another category.")
-    		  format.html { render action: "new"}
-          format.json { render json: @category.errors, status: :unprocessable_entity }
-    		end
-    	end
-  	end
-  end
+	def create
+		it = It.find(params[:it_id])
+		if !it.locked
+			@category = Category.new(category_params)
+			@category.it = it
+			@category.user_id = 0
+			@category.ip = request.remote_ip
 
-  # DELETE /categories/1
+			time_diff = Shizit::Application.config.category_throttle + 1
+			latest = Category.where(ip: @category.ip).order('created_at DESC').limit(1).first
+
+			time_diff = Time.now - latest.created_at if latest.present?
+
+			respond_to do |format|
+				if time_diff > Shizit::Application.config.category_throttle
+					if @category.save
+						flash[:notice] = 'Category was successfully created.'
+						format.html { redirect_to it_url(@category.it) }
+						format.json { render json: @category, status: :created, location: @category }
+					else
+						format.html { render action: "new" }
+						format.json { render json: @category.errors, status: :unprocessable_entity }
+					end
+				else
+					@category.errors.add(:theshiz, "Please wait: #{Shizit::Application.config.category_throttle} seconds before creating another category.")
+					format.html { render action: "new" }
+					format.json { render json: @category.errors, status: :unprocessable_entity }
+				end
+			end
+		end
+	end
+
+	# DELETE /categories/1
   # DELETE /categories/1.json
   def destroy
     @category = Category.find(params[:id])
@@ -94,5 +90,11 @@ class CategoriesController < ApplicationController
   		  end
   	  end
 	  end
-  end
+	end
+
+	private
+
+	def category_params
+		params.require(:category).permit(:theshiz, :is_nsfw, :humanizer_answer, :humanizer_question_id)
+	end
 end

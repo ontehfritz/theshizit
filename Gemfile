@@ -1,44 +1,35 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.1.1'
-#gem "rake", '0.8.7'
-gem 'rake', '0.9.2.2'
-gem 'exception_notification'
-gem 'daemons'
-gem 'coderay'
-gem 'humanizer'
-gem 'ruby-oembed'
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-gem 'mysql2'
-gem 'devise'
-gem "cancan"
-gem 'will_paginate'
-gem 'therubyracer'
+# Core Rails stack
+gem 'rails', '~> 6.1.3'
+gem 'sqlite3', '~> 1.4'
+# gem 'mysql2', '~> 0.5' # Uncomment if using MySQL
+gem 'rake', '~> 13.0'
 
-# Gems used only for assets and not required
-# in production environments by default.
+# Useful Rails add-ons
+gem 'devise', '~> 4.9'              # user authentication
+gem 'cancancan', '~> 3.4'           # authorization (modern cancan fork)
+gem 'will_paginate', '~> 3.3'       # pagination
+gem 'exception_notification'        # exception notifier
+gem 'daemons'                       # daemon processes
+gem 'coderay'                       # syntax highlighting
+gem 'humanizer'                     # anti-bot/human verification
+gem 'oembed'                        # modern maintained oEmbed gem
+gem 'webrick'
+gem 'bigdecimal'
+gem 'mutex_m'
+gem 'tzinfo-data'
+
+# JavaScript and assets
+gem 'jquery-rails', '~> 4.4'
+gem 'jquery-ui-rails'
+
 group :assets do
-  gem 'sass-rails',   '~> 3.1.4'
-  gem 'coffee-rails', '~> 3.1.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails', '~> 6.0'        # SCSS support
+  gem 'uglifier', '~> 4.2'          # JS minifier
 end
 
-gem 'jquery-rails'
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
+# Test group
 group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
+  gem 'minitest', '~> 5.18', require: false # modern test framework
 end

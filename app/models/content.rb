@@ -1,7 +1,7 @@
 class Content < ActiveRecord::Base
   include Humanizer
   require_human_on :create
-  default_scope :conditions => ["contents.in_recycling = ?", false]
+	default_scope { where(in_recycling: false) }
 	has_many :comments
 	belongs_to :category, :counter_cache => true
 	after_save :update_counter_cache
@@ -31,10 +31,10 @@ class Content < ActiveRecord::Base
 		"#{id}-#{title.gsub(/[^a-z0-9]+/i, '-')}"
 	end
 
-  def update_counter_cache
-    self.category.active_contents_count = Content.count( :conditions => ["in_recycling = 0 AND category_id = ?", self.category.id])
-    self.category.save
-  end
+	def update_counter_cache
+		count = Content.where(in_recycling: false, category_id: self.category.id).count
+		self.category.update(active_contents_count: count)
+	end
   
   def update_click_counter
     self.click_count = self.click_count + 1

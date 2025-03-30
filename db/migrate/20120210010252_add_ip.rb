@@ -1,4 +1,4 @@
-class AddIp < ActiveRecord::Migration
+class AddIp < ActiveRecord::Migration[6.1]
   def up
     add_column :contents, :ip, :string
     add_column :comments, :ip, :string

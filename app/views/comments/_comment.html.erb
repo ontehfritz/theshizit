@@ -5,7 +5,7 @@
 	comment.content.category, comment.content, comment), :confirm => 'Are you sure?', :method => :delete %>
 <% end %>
 <a name="<%= comment.comment_number.to_s%>" class="smalllink">#<%= comment.comment_number.to_s%></a>
-<span style="font-size: 12px;"><%= time_ago_in_words(comment.created_at, true) %> ago:</span>
+<span style="font-size: 12px;"><%= time_ago_in_words(comment.created_at, include_seconds: true) %> ago:</span>
 <br />
 <p class="comments">
 <%= comment.comment_text.html_safe %>

@@ -5,7 +5,7 @@
 	<%= link_to content.title, it_category_content_url(content.category.it, 
 	         content.category, content)  %>
 	<br />
-	<%= time_ago_in_words(content.created_at.to_s, true) %> Ago
+	<%= time_ago_in_words(content.created_at.to_s, include_seconds:true) %> Ago
 	</div>
 	<div style="display:none;" class="s">
 	<% if content.class.name == "Pic" %>
@@ -30,7 +30,7 @@
 				<%= content.render_html.html_safe %>
 				<a href="<%= content.theshiz %>" target="_blank" class="smalllink"><%= content.theshiz %></a>
 			<% when "Code" %>
-				<%= CodeRay.scan(content.theshiz, content.file_type).div().html_safe %>
+				<%= CodeRay.scan(content.theshiz, (content.file_type.presence || 'text').to_sym).div.html_safe %>
 			<% end %>
 	</div>
 	</div>

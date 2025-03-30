@@ -37,12 +37,12 @@ class CommentsController < ApplicationController
   def create
     it = It.find(params[:it_id])
   	if !it.locked
-  		@comment = Comment.new(params[:comment])
+			@comment = Comment.new(comment_params)
   		@comment.theshiz = sanitize(@comment.theshiz)
   		@comment.user_id = 0
   		@comment.ip = request.remote_ip;
-  		latest_comment = Comment.find(:first,:conditions => ['content_id = ?', @comment.content.id], :order => 'created_at DESC', :limit => 1)
-  		
+			latest_comment = Comment.where(content_id: @comment.content.id).order(created_at: :desc).first
+
   		if latest_comment != nil
   		  @comment.comment_number = latest_comment.comment_number + 1
   		end
@@ -52,8 +52,8 @@ class CommentsController < ApplicationController
       @content =  @comment.content
       
       time_diff = Shizit::Application.config.comment_throttle + 1
-      
-      latest = Comment.find(:first,:conditions => ['ip = ?', @comment.ip], :order => 'created_at DESC', :limit => 1)
+
+			latest = Comment.where(ip: @comment.ip).order(created_at: :desc).first
       
       if latest != nil
         time_diff = Time.now - latest.created_at
@@ -94,5 +94,11 @@ class CommentsController < ApplicationController
     		end
     	end
   	end
-  end
+	end
+
+	private
+
+	def comment_params
+		params.require(:comment).permit(:content_id, :theshiz, :humanizer_answer, :humanizer_question_id)
+	end
 end
