@@ -14,7 +14,7 @@ gem 'exception_notification'        # exception notifier
 gem 'daemons'                       # daemon processes
 gem 'coderay'                       # syntax highlighting
 gem 'humanizer'                     # anti-bot/human verification
-gem 'oembed'                        # modern maintained oEmbed gem
+gem 'ruby-oembed'
 gem 'webrick'
 gem 'bigdecimal'
 gem 'mutex_m'
